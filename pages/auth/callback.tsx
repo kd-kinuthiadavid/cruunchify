@@ -1,16 +1,21 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import querystring from "querystring";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { login } from "../../utils/auth";
 
 const callback = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter();
+
   if (data.error) {
     return (
       <div>
         <h2>{data.error.message}</h2>
-        <h2>{data.error.description}</h2>
+        <h3>{data.error.description}</h3>
+        <p>Your session expired, please log in</p>
+        <button onClick={() => login(router)}>login</button>
       </div>
     );
   }
