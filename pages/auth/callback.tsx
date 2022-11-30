@@ -11,7 +11,7 @@ const callback = ({
 
   if (data.error) {
     return (
-      <div>
+      <div className="text-red-500">
         <h2>{data.error.message}</h2>
         <h3>{data.error.description}</h3>
         <p>Your session expired, please log in</p>
@@ -19,7 +19,7 @@ const callback = ({
       </div>
     );
   }
-  return <div>success</div>;
+  return <div className="text-green-400">success</div>;
 };
 
 type AccessTokenDataError = {
