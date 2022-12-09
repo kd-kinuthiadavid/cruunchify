@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // adapted from https://tanstack.com/query/v4/docs/guides/ssr
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
         {/* adapted from https://tanstack.com/query/v4/docs/devtools */}
         <ReactQueryDevtools initialIsOpen={false} />
       </Hydrate>
