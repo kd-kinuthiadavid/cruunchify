@@ -8,6 +8,11 @@ module.exports = {
     extend: {
       colors: {
         "cr-green": "#33FF7A",
+        "cr-light-green": "#1DB954",
+      },
+      fontFamily: {
+        sans: ["Montserrat", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
     },
   },
