@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav className="mx-10 my-8">
+    <nav className="mx-10 my-8 flex justify-center mb-16">
       {/* far left nav items */}
       <ul className="flex gap-x-5 items-center">
         {/* logo */}
