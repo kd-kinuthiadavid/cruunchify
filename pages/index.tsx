@@ -12,6 +12,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex flex-col items-center text-center p-3 lg:text-left lg:flex-row lg:mx-32 lg:justify-between lg:mt-28">
+        {/* hero text */}
         <div className="flex flex-col gap-y-8 lg:gap-y-16 lg:w-1/2">
           <h1 className="text-6xl lg:text-8xl font-black">
             Discover how <br /> you{" "}
@@ -21,7 +22,7 @@ const Home: NextPage = () => {
             Explore your music taste, profile <br /> and create awesome
             playlists
           </p>
-          <button className="flex justify-center items-center py-5 gap-x-5 lg:gap-x-2 bg-cr-light-green lg:w-2/5 rounded-md">
+          <button className="flex justify-center items-center py-5 gap-x-5 md:hidden lg:gap-x-2 bg-cr-light-green lg:w-2/5 rounded-md">
             <Image
               src="/icons/Spotify.png"
               height={30}
@@ -31,16 +32,20 @@ const Home: NextPage = () => {
             <small className="text-lg capitalize">Continue with spotify</small>
           </button>
         </div>
-        <div className="hidden lg:block w-1/2">
-          <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5">
-            <Image
-              src="/icons/Spotify.png"
-              height={40}
-              width={40}
-              alt="icon: spotify logo"
-            />
+        {/* hero image section */}
+        <div className="hidden md:block md:max-lg:flex flex-col lg:w-1/2">
+          {/* hero image */}
+          <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5 md:max-lg:my-5 md:max-lg:w-[500px]">
+            <div className="absolute top-5 left-5">
+              <Image
+                src="/icons/Spotify.png"
+                height={40}
+                width={40}
+                alt="icon: spotify logo"
+              />
+            </div>
             <div className="absolute bottom-5">
-              <h3 className="text-5xl font-bold pb-5">Léa Paci</h3>
+              <h3 className="text-5xl font-bold pb-5 text-left">Léa Paci</h3>
               {/* Genres and Actions */}
               <div className="flex gap-x-20">
                 {/* Genres */}
@@ -62,6 +67,16 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
+          {/* CTA: only visible in md */}
+          <button className="flex justify-center items-center py-5 gap-x-5 bg-cr-light-green rounded-md lg:hidden">
+            <Image
+              src="/icons/Spotify.png"
+              height={30}
+              width={30}
+              alt="icon: cruunchify logo"
+            />
+            <small className="text-lg capitalize">Continue with spotify</small>
+          </button>
         </div>
       </main>
     </div>
