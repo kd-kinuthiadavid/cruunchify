@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 
       <main className="flex mx-32 justify-between mt-28">
         <div className="flex flex-col gap-y-16 w-1/2">
-          <h1 className="text-9xl font-black">
+          <h1 className="text-8xl font-black">
             Discover how <br /> you{" "}
             <span className="text-cr-green">listen.</span>
           </h1>
@@ -28,12 +28,40 @@ const Home: NextPage = () => {
               width={30}
               alt="icon: cruunchify logo"
             />
-            <small className="text-xl capitalize">Continue with spotify</small>
+            <small className="text-lg capitalize">Continue with spotify</small>
           </button>
         </div>
-        <div className="text-blue-200 w-1/2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
-          exercitationem.
+        <div className="w-1/2">
+          <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5">
+            <Image
+              src="/icons/Spotify.png"
+              height={40}
+              width={40}
+              alt="icon: spotify logo"
+            />
+            <div className="absolute bottom-5">
+              <h3 className="text-5xl font-bold pb-5">Léa Paci</h3>
+              {/* Genres and Actions */}
+              <div className="flex gap-x-20">
+                {/* Genres */}
+                <div className="flex gap-5">
+                  <div className="px-5 py-3 bg-cr-genre rounded-3xl capitalize">
+                    french pop
+                  </div>
+                  <div className="px-5 py-3 bg-white text-black flex justify-center items-center rounded-3xl">
+                    +2
+                  </div>
+                </div>
+                {/* Play Btn */}
+                <Image
+                  src="/icons/Play.png"
+                  height={50}
+                  width={50}
+                  alt="icon: play on spotify"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
