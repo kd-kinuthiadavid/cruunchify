@@ -11,17 +11,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex mx-32 justify-between mt-28">
-        <div className="flex flex-col gap-y-16 w-1/2">
-          <h1 className="text-8xl font-black">
+      <main className="flex flex-col items-center text-center p-3 lg:text-left lg:flex-row lg:mx-32 lg:justify-between lg:mt-28">
+        <div className="flex flex-col gap-y-8 lg:gap-y-16 lg:w-1/2">
+          <h1 className="text-6xl lg:text-8xl font-black">
             Discover how <br /> you{" "}
             <span className="text-cr-green">listen.</span>
           </h1>
-          <p className="text-3xl font-light">
+          <p className="text-xl lg:text-3xl font-light">
             Explore your music taste, profile <br /> and create awesome
             playlists
           </p>
-          <button className="flex justify-center items-center gap-x-2 bg-cr-light-green w-2/5 py-6 rounded-md">
+          <button className="flex justify-center items-center py-5 gap-x-5 lg:gap-x-2 bg-cr-light-green lg:w-2/5 rounded-md">
             <Image
               src="/icons/Spotify.png"
               height={30}
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
             <small className="text-lg capitalize">Continue with spotify</small>
           </button>
         </div>
-        <div className="w-1/2">
+        <div className="hidden lg:block w-1/2">
           <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5">
             <Image
               src="/icons/Spotify.png"
