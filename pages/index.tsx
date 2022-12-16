@@ -11,9 +11,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center text-center p-3 lg:text-left lg:flex-row lg:mx-32 lg:justify-between lg:mt-28">
+      <main className="flex flex-col items-center text-center p-3 lg:text-left lg:flex-row lg:mx-32 lg:justify-between lg:gap-x-20">
         {/* hero text */}
-        <div className="flex flex-col gap-y-8 lg:gap-y-16 lg:w-1/2">
+        <div className="flex flex-col gap-y-8 lg:gap-y-16 lg:max-w-1/2">
           <h1 className="text-6xl lg:text-8xl font-black">
             Discover how <br /> you{" "}
             <span className="text-cr-green">listen.</span>
@@ -22,20 +22,22 @@ const Home: NextPage = () => {
             Explore your music taste, profile <br /> and create awesome
             playlists
           </p>
-          <button className="flex justify-center items-center py-5 gap-x-5 md:hidden lg:gap-x-2 bg-cr-light-green lg:w-2/5 rounded-md">
+          <button className="flex justify-center items-center py-5 gap-x-5 md:max-lg:hidden bg-cr-light-green rounded-md lg:max-w-lg lg:py-8">
             <Image
               src="/icons/Spotify.png"
               height={30}
               width={30}
               alt="icon: cruunchify logo"
             />
-            <small className="text-lg capitalize">Continue with spotify</small>
+            <small className="text-lg lg:text-xl capitalize">
+              Continue with spotify
+            </small>
           </button>
         </div>
         {/* hero image section */}
-        <div className="hidden md:block md:max-lg:flex flex-col lg:w-1/2">
+        <div className="hidden md:block md:max-lg:flex flex-col lg:max-w-1/2">
           {/* hero image */}
-          <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5 md:max-lg:my-5 md:max-lg:w-[500px]">
+          <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5 md:max-lg:my-5 md:w-[500px] lg:h-[600px]">
             <div className="absolute top-5 left-5">
               <Image
                 src="/icons/Spotify.png"
