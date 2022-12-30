@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import querystring from "querystring";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import LoadingBar from "react-top-loading-bar";
 import { login } from "../../utils/auth";
 
 interface CurrentTabState {
@@ -19,8 +20,10 @@ const callback = ({
     explore: false,
     create: false,
   });
+  const loaderRef = useRef(null);
 
   useEffect(() => {
+    loaderRef?.current?.continuousStart();
     const discTimeOut = setTimeout(
       () =>
         setCurrentTab({
@@ -28,7 +31,7 @@ const callback = ({
           explore: true,
           create: false,
         }),
-      5000
+      2000
     );
     const expTimeOut = setTimeout(
       () =>
@@ -37,7 +40,7 @@ const callback = ({
           explore: false,
           create: true,
         }),
-      10000
+      4000
     );
     const createTimeOut = setTimeout(
       () =>
@@ -46,10 +49,11 @@ const callback = ({
           explore: false,
           create: false,
         }),
-      15000
+      6000
     );
 
     return () => {
+      loaderRef?.current?.complete();
       clearTimeout(discTimeOut);
       clearTimeout(expTimeOut);
       clearTimeout(createTimeOut);
@@ -59,6 +63,7 @@ const callback = ({
   if (data.error) {
     return (
       <main className="h-screen flex flex-col items-center">
+        <LoadingBar color="#33FF7A" ref={loaderRef} />
         <section className="flex justify-center gap-x-10">
           <div className="flex flex-col">
             <h1
