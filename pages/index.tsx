@@ -46,10 +46,10 @@ const Home: NextPage = () => {
                 alt="icon: spotify logo"
               />
             </div>
-            <div className="absolute bottom-5">
+            <div className="absolute bottom-5 w-full">
               <h3 className="text-5xl font-bold pb-5 text-left">Léa Paci</h3>
               {/* Genres and Actions */}
-              <div className="flex gap-x-20">
+              <div className="flex justify-between">
                 {/* Genres */}
                 <div className="flex gap-5">
                   <div className="px-5 py-3 bg-cr-genre rounded-3xl capitalize">
@@ -60,12 +60,14 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 {/* Play Btn */}
-                <Image
-                  src="/icons/Play.png"
-                  height={50}
-                  width={50}
-                  alt="icon: play on spotify"
-                />
+                <div className="absolute bottom right-10">
+                  <Image
+                    src="/icons/Play.png"
+                    height={50}
+                    width={50}
+                    alt="icon: play on spotify"
+                  />
+                </div>
               </div>
             </div>
           </div>
