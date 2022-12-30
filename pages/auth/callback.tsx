@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
 import querystring from "querystring";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Image from "next/image";
 import LoadingBar from "react-top-loading-bar";
 import { login } from "../../utils/auth";
 
@@ -56,12 +57,27 @@ const callback = ({
 
   if (data.error) {
     return (
-      <div className="text-red-500">
-        <h2>{data.error.message}</h2>
-        <h3>{data.error.description}</h3>
-        <p>Your session expired, please log in</p>
-        <button onClick={() => login(router)}>login</button>
-      </div>
+      <section className="h-screen flex flex-col items-center gap-y-10 text-center">
+        <h1 className="font-black text-9xl">Oops !</h1>
+        <h2 className="font-black text-6xl text-cr-light-green">
+          We hit a snag.
+        </h2>
+        <p className="font-bold text-3xl max-w-lg leading-normal">
+          Something went wrong when connecting to Spotify. Please try again.
+        </p>
+        <button
+          className="flex items-center bg-cr-light-green px-10 py-5 gap-x-5 rounded-md"
+          onClick={() => login(router)}
+        >
+          <Image
+            src="/icons/Spotify.png"
+            height={30}
+            width={30}
+            alt="icon: spotify logo"
+          />
+          <small className="text-lg lg:text-xl capitalize">Try Again</small>
+        </button>
+      </section>
     );
   }
   return (
