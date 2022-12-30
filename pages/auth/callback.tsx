@@ -4,7 +4,9 @@ import querystring from "querystring";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
 import LoadingBar from "react-top-loading-bar";
+
 import { login } from "../../utils/auth";
+import useCrStore, { CrAccessTokenData } from "../../store";
 
 interface CurrentTabState {
   discover: boolean;
@@ -22,6 +24,7 @@ const callback = ({
     create: false,
   });
   const loaderRef = useRef(null);
+  const setAccessTokenData = useCrStore((state) => state.setAccessTknData);
 
   useEffect(() => {
     if (!data?.error) {
@@ -80,6 +83,17 @@ const callback = ({
       </section>
     );
   }
+
+  // update the store
+  const accessTknData: CrAccessTokenData = {
+    accessToken: data.accessToken,
+    refreshToken: data.refreshToken,
+    expiresIn: data.expiresIn,
+    scope: data.scope,
+    tokenType: data.tokenType,
+  };
+  setAccessTokenData(accessTknData);
+
   return (
     <main className="h-screen flex flex-col items-center">
       <LoadingBar color="#33FF7A" ref={loaderRef} />
