@@ -42,15 +42,7 @@ const callback = ({
         }),
       4000
     );
-    const createTimeOut = setTimeout(
-      () =>
-        setCurrentTab({
-          discover: true,
-          explore: false,
-          create: false,
-        }),
-      6000
-    );
+    const createTimeOut = setTimeout(() => router.push("/dashboard"), 6000);
 
     return () => {
       loaderRef?.current?.complete();
