@@ -37,7 +37,13 @@ const Home: NextPage = () => {
         {/* hero image section */}
         <div className="hidden md:block md:max-lg:flex flex-col lg:max-w-1/2">
           {/* hero image */}
-          <div className="w-[400px] h-[500px] bg-[url('/images/lea-paci-landing.png')] bg-no-repeat bg-cover border-5 rounded-lg relative p-5 md:max-lg:my-5 md:w-[500px] lg:h-[600px]">
+          <div
+            className="w-[400px] h-[500px] bg-no-repeat bg-cover border-5 rounded-lg relative p-5 md:max-lg:my-5 md:w-[500px] lg:h-[600px]"
+            style={{
+              backgroundImage:
+                "linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%), url('/images/lea-paci-landing.png')",
+            }}
+          >
             <div className="absolute top-5 left-5">
               <Image
                 src="/icons/Spotify.png"
