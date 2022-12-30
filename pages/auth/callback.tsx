@@ -23,104 +23,100 @@ const callback = ({
   const loaderRef = useRef(null);
 
   useEffect(() => {
-    loaderRef?.current?.continuousStart();
-    const discTimeOut = setTimeout(
-      () =>
-        setCurrentTab({
-          discover: false,
-          explore: true,
-          create: false,
-        }),
-      2000
-    );
-    const expTimeOut = setTimeout(
-      () =>
-        setCurrentTab({
-          discover: false,
-          explore: false,
-          create: true,
-        }),
-      4000
-    );
-    const createTimeOut = setTimeout(() => router.push("/dashboard"), 6000);
+    if (!data?.error) {
+      loaderRef?.current?.continuousStart();
+      const discTimeOut = setTimeout(
+        () =>
+          setCurrentTab({
+            discover: false,
+            explore: true,
+            create: false,
+          }),
+        2000
+      );
+      const expTimeOut = setTimeout(
+        () =>
+          setCurrentTab({
+            discover: false,
+            explore: false,
+            create: true,
+          }),
+        4000
+      );
+      const createTimeOut = setTimeout(() => router.push("/dashboard"), 6000);
 
-    return () => {
-      loaderRef?.current?.complete();
-      clearTimeout(discTimeOut);
-      clearTimeout(expTimeOut);
-      clearTimeout(createTimeOut);
-    };
-  }, []);
+      return () => {
+        loaderRef?.current?.complete();
+        clearTimeout(discTimeOut);
+        clearTimeout(expTimeOut);
+        clearTimeout(createTimeOut);
+      };
+    }
+  }, [data]);
 
   if (data.error) {
     return (
-      <main className="h-screen flex flex-col items-center">
-        <LoadingBar color="#33FF7A" ref={loaderRef} />
-        <section className="flex justify-center gap-x-10">
-          <div className="flex flex-col">
-            <h1
-              className={`text-3xl ${
-                currentTab.discover ? "text-cr-light-green" : "text-cr-muted"
-              } font-extrabold`}
-            >
-              1. Discover
-            </h1>
-          </div>
-          <div className="flex flex-col">
-            <h1
-              className={`text-3xl ${
-                currentTab.explore ? "text-cr-light-green" : "text-cr-muted"
-              } font-extrabold`}
-            >
-              2. Explore
-            </h1>
-          </div>
-          <div className="flex flex-col">
-            <h1
-              className={`text-3xl ${
-                currentTab.create ? "text-cr-light-green" : "text-cr-muted"
-              } font-extrabold`}
-            >
-              3. Create
-            </h1>
-          </div>
-        </section>
-        {currentTab.discover ? (
-          <section className="flex  flex-col items-center mt-10 gap-10">
-            <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
-              Discover how you listen to music
-            </h2>
-          </section>
-        ) : null}
-        {currentTab.explore ? (
-          <section className="flex flex-col items-center mt-10 gap-10">
-            <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
-              Explore your music taste
-            </h2>
-          </section>
-        ) : null}
-        {currentTab.create ? (
-          <section className="flex flex-col items-center mt-10 gap-10">
-            <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
-              Create awesome playlists
-            </h2>
-          </section>
-        ) : null}
-      </main>
-
-      // <div className="text-red-500">
-      //   <h2>{data.error.message}</h2>
-      //   <h3>{data.error.description}</h3>
-      //   <p>Your session expired, please log in</p>
-      //   <button onClick={() => login(router)}>login</button>
-      // </div>
+      <div className="text-red-500">
+        <h2>{data.error.message}</h2>
+        <h3>{data.error.description}</h3>
+        <p>Your session expired, please log in</p>
+        <button onClick={() => login(router)}>login</button>
+      </div>
     );
   }
   return (
-    <main className="flex">
-      <section>Discover</section>
-      <section>Explore</section>
-      <section>Create</section>
+    <main className="h-screen flex flex-col items-center">
+      <LoadingBar color="#33FF7A" ref={loaderRef} />
+      <section className="flex justify-center gap-x-10">
+        <div className="flex flex-col">
+          <h1
+            className={`text-3xl ${
+              currentTab.discover ? "text-cr-light-green" : "text-cr-muted"
+            } font-extrabold`}
+          >
+            1. Discover
+          </h1>
+        </div>
+        <div className="flex flex-col">
+          <h1
+            className={`text-3xl ${
+              currentTab.explore ? "text-cr-light-green" : "text-cr-muted"
+            } font-extrabold`}
+          >
+            2. Explore
+          </h1>
+        </div>
+        <div className="flex flex-col">
+          <h1
+            className={`text-3xl ${
+              currentTab.create ? "text-cr-light-green" : "text-cr-muted"
+            } font-extrabold`}
+          >
+            3. Create
+          </h1>
+        </div>
+      </section>
+      {currentTab.discover ? (
+        <section className="flex  flex-col items-center mt-10 gap-10">
+          <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
+            Discover how you listen to music
+          </h2>
+        </section>
+      ) : null}
+      {currentTab.explore ? (
+        <section className="flex flex-col items-center mt-10 gap-10">
+          <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
+            Explore your music taste
+          </h2>
+        </section>
+      ) : null}
+      {currentTab.create ? (
+        <section className="flex flex-col items-center mt-10 gap-10">
+          <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
+            Create awesome playlists
+          </h2>
+        </section>
+      ) : null}
     </main>
   );
 };
