@@ -10,6 +10,7 @@ module.exports = {
         "cr-green": "#33FF7A",
         "cr-light-green": "#1DB954",
         "cr-genre": "rgba(255,255,255,0.2)",
+        "cr-muted": "#3B3B40",
       },
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
