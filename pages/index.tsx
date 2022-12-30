@@ -1,8 +1,12 @@
 import type { NextPage } from 'next'
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { login } from "../utils/auth";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   return (
     <div>
       <Head>
@@ -22,7 +26,10 @@ const Home: NextPage = () => {
             Explore your music taste, profile <br /> and create awesome
             playlists
           </p>
-          <button className="flex justify-center items-center py-5 gap-x-5 md:max-lg:hidden bg-cr-light-green rounded-md lg:max-w-lg lg:py-8">
+          <button
+            className="flex justify-center items-center py-5 gap-x-5 md:max-lg:hidden bg-cr-light-green rounded-md lg:max-w-lg lg:py-8"
+            onClick={() => login(router)}
+          >
             <Image
               src="/icons/Spotify.png"
               height={30}
@@ -78,7 +85,10 @@ const Home: NextPage = () => {
             </div>
           </div>
           {/* CTA: only visible in md */}
-          <button className="flex justify-center items-center py-5 gap-x-5 bg-cr-light-green rounded-md lg:hidden">
+          <button
+            className="flex justify-center items-center py-5 gap-x-5 bg-cr-light-green rounded-md lg:hidden"
+            onClick={() => login(router)}
+          >
             <Image
               src="/icons/Spotify.png"
               height={30}
