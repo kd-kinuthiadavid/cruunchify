@@ -6,7 +6,8 @@ import Image from "next/image";
 import LoadingBar from "react-top-loading-bar";
 
 import { login } from "../../utils/auth";
-import useCrStore, { CrAccessTokenData } from "../../store";
+import useCrStore, { CrAccessTokenData, SpotifyUser } from "../../store";
+import getCurrentUser from "../../utils/requestUtils/getCurrentUser";
 
 interface CurrentTabState {
   discover: boolean;
@@ -25,6 +26,7 @@ const callback = ({
   });
   const loaderRef = useRef(null);
   const setAccessTokenData = useCrStore((state) => state.setAccessTknData);
+  const setCurrentUser = useCrStore((state) => state.setCurrentUser);
 
   useEffect(() => {
     if (!data?.error) {
@@ -93,6 +95,7 @@ const callback = ({
     tokenType: data.tokenType,
   };
   setAccessTokenData(accessTknData);
+  setCurrentUser(data.user!);
 
   return (
     <main className="h-screen flex flex-col items-center">
@@ -163,6 +166,7 @@ interface AccessTokenData {
   expiresIn?: number;
   refreshToken?: string;
   scope?: string;
+  user?: SpotifyUser;
 }
 
 export const getServerSideProps: GetServerSideProps<{
@@ -228,6 +232,12 @@ export const getServerSideProps: GetServerSideProps<{
           data.expiresIn = res.expires_in;
           data.scope = res.scope;
           data.tokenType = res.token_type;
+
+          // fetch the current user
+          try {
+            const user = await getCurrentUser(res.access_token);
+            data.user = user;
+          } catch (error) {}
         }
       } catch (error) {
         // This means that something went wrong when fetching the access token object

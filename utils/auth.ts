@@ -1,4 +1,5 @@
 import { NextRouter } from "next/router";
+import CryptoJS from "crypto-js";
 
 /**
  * Request authorization to access data
@@ -24,4 +25,11 @@ function login(router: NextRouter) {
   router.push(authRedirectURI);
 }
 
-export { login };
+function decryptToken(token: string): string {
+  return CryptoJS.AES.decrypt(
+    token!,
+    process.env.NEXT_PUBLIC_ENC_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+}
+
+export { login, decryptToken };

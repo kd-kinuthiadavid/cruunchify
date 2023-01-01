@@ -1,25 +1,33 @@
-import React, { useEffect, useState } from "react";
-import CryptoJS from "crypto-js";
+import React, { useEffect, useRef, useState } from "react";
+import LoadingBar from "react-top-loading-bar";
 
-import useCrStore from "../store";
+import useCrStore, { SpotifyUser } from "../store";
 
 const dashboard = () => {
-  const accessTknData = useCrStore((state) => state.accessTokenData);
-  const [accessTkn, setAccessTkn] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<SpotifyUser>({});
+  const loaderRef = useRef(null);
+  const { currentUser } = useCrStore();
 
   useEffect(() => {
-    const encryptedAccessTkn = accessTknData.accessToken;
-    const decryptedAccessTkn = CryptoJS.AES.decrypt(
-      encryptedAccessTkn!,
-      process.env.NEXT_PUBLIC_ENC_SECRET_KEY!
-    ).toString(CryptoJS.enc.Utf8);
-    setAccessTkn(decryptedAccessTkn);
-  }, [accessTknData]);
+    setIsLoading(true);
+    loaderRef?.current?.continuousStart();
+    if (currentUser.display_name) {
+      setUser(currentUser);
+      setIsLoading(false);
+    }
+
+    return () => {
+      loaderRef?.current?.complete();
+    };
+  }, [currentUser]);
 
   return (
     <div>
+      {isLoading ? <LoadingBar color="#33FF7A" ref={loaderRef} /> : null}
       <p>dashboard</p>
-      <pre>{accessTkn}</pre>
+      <p>{user.country}</p>
+      <p>{user.display_name}</p>
     </div>
   );
 };

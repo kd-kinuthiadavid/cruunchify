@@ -11,12 +11,28 @@ interface CrAccessTokenData {
   scope?: string;
 }
 
+interface SpotifyUser {
+  country?: string;
+  display_name?: string;
+  email?: string;
+  followers?: {
+    href: string;
+    total: number;
+  };
+  images?: Array<{ url: string; height: number; width: number }>;
+  type?: string;
+  uri?: string;
+  product?: string;
+  href?: string;
+  id?: string;
+}
+
 // crunchify state
 interface CrState {
   accessTokenData: CrAccessTokenData;
   setAccessTknData: (payload: CrAccessTokenData) => void;
-  currentUser: any;
-  setCurrentUser: (payload: any) => void;
+  currentUser: SpotifyUser;
+  setCurrentUser: (payload: SpotifyUser) => void;
 }
 
 const useCrStore = create<CrState>()(
@@ -39,7 +55,7 @@ const useCrStore = create<CrState>()(
               ).toString(),
             },
           })),
-        setCurrentUser: (payload) => set({ currentUser: payload }),
+        setCurrentUser: (payload) => set((state) => ({ currentUser: payload })),
       }),
       {
         name: "crunchify-store",
@@ -49,4 +65,4 @@ const useCrStore = create<CrState>()(
 );
 
 export default useCrStore;
-export type { CrAccessTokenData };
+export type { CrAccessTokenData, SpotifyUser };
