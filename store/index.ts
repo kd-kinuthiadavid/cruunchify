@@ -25,6 +25,7 @@ interface SpotifyUser {
   product?: string;
   href?: string;
   id?: string;
+  external_urls?: any;
 }
 
 // crunchify state
