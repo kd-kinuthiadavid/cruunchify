@@ -62,21 +62,6 @@ const dashboard = () => {
           <h1 className="text-5xl md:text-6xl font-extrabold">
             {user.display_name}
           </h1>
-          {/* bio data */}
-          <div className="flex flex-wrap gap-x-2 font-normal">
-            <h3 className="lowercase">
-              {user.email}
-              <span className="font-bold">.</span>{" "}
-            </h3>
-            <h3 className="uppercase">
-              {user.country}
-              <span className="font-bold">.</span>
-            </h3>
-            <h3 className="capitalize">
-              {user.product}
-              <span className="font-bold">.</span>{" "}
-            </h3>
-          </div>
           {/* bio stats */}
           <div className="flex flex-wrap justify-between">
             <div className="flex items-center md:items-end gap-x-2">
