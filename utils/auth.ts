@@ -8,7 +8,8 @@ import CryptoJS from "crypto-js";
 function login(router: NextRouter) {
   const respType = process.env.NEXT_PUBLIC_SPOTIFY_AUTH_RESP_TYPE || "";
   const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID || "";
-  const scope = "user-read-private user-read-email";
+  const scope =
+    "user-read-private user-read-email user-library-read user-read-recently-played streaming user-top-read playlist-modify-public playlist-modify-private user-library-modify user-read-playback-position user-read-currently-playing user-follow-read playlist-read-collaborative user-follow-modify playlist-read-private ugc-image-upload user-read-playback-state user-modify-playback-state";
   const redirectURI = process.env.NEXT_PUBLIC_REDIRECT_URI || "";
   const state = process.env.NEXT_PUBLIC_SPOTIFY_AUTH_STATE || "";
 
