@@ -24,7 +24,7 @@ const callback = ({
     explore: false,
     create: false,
   });
-  const loaderRef = useRef(null);
+  const loaderRef = useRef<any>(null);
   const setAccessTokenData = useCrStore((state) => state.setAccessTknData);
   const setCurrentUser = useCrStore((state) => state.setCurrentUser);
 

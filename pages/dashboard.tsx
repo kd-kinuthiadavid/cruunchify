@@ -10,7 +10,7 @@ import { generateRandomColor } from "../utils";
 const dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<SpotifyUser>({});
-  const loaderRef = useRef(null);
+  const loaderRef = useRef<any>(null);
   const {
     currentUser,
     accessTokenData: { accessToken },
