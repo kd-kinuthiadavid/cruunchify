@@ -3,7 +3,6 @@ import LoadingBar from "react-top-loading-bar";
 
 import useCrStore, { SpotifyUser } from "../store";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import getCurrentUserStats from "../utils/requestUtils/getCurrentUserStats";
 import { generateRandomColor } from "../utils";
@@ -15,7 +14,6 @@ const dashboard = () => {
     currentUser,
     accessTokenData: { accessToken },
   } = useCrStore();
-  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
