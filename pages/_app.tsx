@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Hydrate state={pageProps.dehydratedState}>
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
         {/* adapted from https://tanstack.com/query/v4/docs/devtools */}
         <ReactQueryDevtools initialIsOpen={false} />
