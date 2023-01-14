@@ -114,15 +114,17 @@ const dashboard = () => {
               top artists
             </div>
           </Link>
-          <div
-            className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
-            style={{
-              backgroundColor: `${generateRandomColor()}`,
-              backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
-            }}
-          >
-            top tracks
-          </div>
+          <Link href="/top/tracks">
+            <div
+              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
+              style={{
+                backgroundColor: `${generateRandomColor()}`,
+                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
+              }}
+            >
+              top tracks
+            </div>
+          </Link>
           <div
             className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
             style={{

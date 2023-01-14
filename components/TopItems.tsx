@@ -8,6 +8,7 @@ interface TopItem {
   type: string;
   id: string;
   href: string;
+  album?: any;
 }
 
 interface TopItemsProps {
@@ -82,7 +83,7 @@ const TopItems = ({
                 height={200}
                 alt={`cruunchify top ${title}: ${item.name}`}
               />
-              <p className="font-medium text-lg text-center">
+              <p className="font-medium text-lg text-center max-w-[200px] truncate">
                 {idx + 1}. {item.name}
               </p>
             </div>
