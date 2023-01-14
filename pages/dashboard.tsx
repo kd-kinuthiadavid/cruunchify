@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import getCurrentUserStats from "../utils/requestUtils/getCurrentUserStats";
 import { generateRandomColor } from "../utils";
+import Link from "next/link";
 const dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<SpotifyUser>({});
@@ -102,15 +103,17 @@ const dashboard = () => {
           explore
         </h2>
         <div className="flex flex-wrap gap-2 font-bold justify-center mt-5">
-          <div
-            className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
-            style={{
-              backgroundColor: `${generateRandomColor()}`,
-              backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
-            }}
-          >
-            top artists
-          </div>
+          <Link href="/top/artists">
+            <div
+              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
+              style={{
+                backgroundColor: `${generateRandomColor()}`,
+                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
+              }}
+            >
+              top artists
+            </div>
+          </Link>
           <div
             className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
             style={{
