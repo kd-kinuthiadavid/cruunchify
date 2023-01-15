@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -7,16 +8,18 @@ export default function Navbar() {
       {/* far left nav items */}
       <ul className="flex gap-x-5 items-center">
         {/* logo */}
-        <ul className="flex items-center gap-x-3 cursor-pointer">
-          <li className="flex items-center">
-            <Image
-              src="/icons/Logo.png"
-              height={50}
-              width={50}
-              alt="icon: cruunchify logo"
-            />
-          </li>
-        </ul>
+        <Link href="/">
+          <ul className="flex items-center gap-x-3 cursor-pointer">
+            <li className="flex items-center">
+              <Image
+                src="/icons/Logo.png"
+                height={50}
+                width={50}
+                alt="icon: cruunchify logo"
+              />
+            </li>
+          </ul>
+        </Link>
         {/* about */}
         <ul className="flex items-center gap-x-1 cursor-pointer">
           <li className="flex items-center">
