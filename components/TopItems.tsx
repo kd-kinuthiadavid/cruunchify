@@ -17,7 +17,8 @@ interface TopItemsProps {
   itemsArr: Array<TopItem>;
   btnText: string;
   isLoading: boolean;
-  setTimeRangeFilter: (filter: string) => void;
+  setTimeRangeFilter?: (filter: string) => void;
+  showFilters: boolean;
 }
 
 interface TopItemsFilters {
@@ -33,6 +34,7 @@ const TopItems = ({
   btnText,
   isLoading,
   setTimeRangeFilter,
+  showFilters,
 }: TopItemsProps) => {
   const loaderRef = useRef<any>(null);
   const [filters, setFilters] = useState<TopItemsFilters>({
@@ -58,7 +60,7 @@ const TopItems = ({
             sixMonths: false,
             allTime: false,
           });
-          setTimeRangeFilter("short_term");
+          setTimeRangeFilter && setTimeRangeFilter("short_term");
         }
         break;
       case "sixMonths":
@@ -68,7 +70,7 @@ const TopItems = ({
             sixMonths: true,
             allTime: false,
           });
-          setTimeRangeFilter("medium_term");
+          setTimeRangeFilter && setTimeRangeFilter("medium_term");
         }
         break;
       case "allTime":
@@ -78,7 +80,7 @@ const TopItems = ({
             sixMonths: false,
             allTime: true,
           });
-          setTimeRangeFilter("long_term");
+          setTimeRangeFilter && setTimeRangeFilter("long_term");
         }
         break;
       default:
@@ -107,33 +109,35 @@ const TopItems = ({
       </section>
       <section className="flex flex-col justify-center items-center gap-y-5 md:max-w-screen-lg">
         {/* filters */}
-        <div className="flex justify-center items-center gap-x-7">
-          <small
-            className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
-              filters.recent ? "text-cr-light-green" : ""
-            }`}
-            onClick={() => toggleFiltersTimeRange("recent")}
-          >
-            recent
-          </small>
-          <small
-            className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
-              filters.sixMonths ? "text-cr-light-green" : ""
-            }`}
-            onClick={() => toggleFiltersTimeRange("sixMonths")}
-          >
-            {" "}
-            past 6 months
-          </small>
-          <small
-            className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
-              filters.allTime ? "text-cr-light-green" : ""
-            }`}
-            onClick={() => toggleFiltersTimeRange("allTime")}
-          >
-            all time
-          </small>
-        </div>
+        {showFilters ? (
+          <div className="flex justify-center items-center gap-x-7">
+            <small
+              className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
+                filters.recent ? "text-cr-light-green" : ""
+              }`}
+              onClick={() => toggleFiltersTimeRange("recent")}
+            >
+              recent
+            </small>
+            <small
+              className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
+                filters.sixMonths ? "text-cr-light-green" : ""
+              }`}
+              onClick={() => toggleFiltersTimeRange("sixMonths")}
+            >
+              {" "}
+              past 6 months
+            </small>
+            <small
+              className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
+                filters.allTime ? "text-cr-light-green" : ""
+              }`}
+              onClick={() => toggleFiltersTimeRange("allTime")}
+            >
+              all time
+            </small>
+          </div>
+        ) : null}
         {/* item cards */}
         <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll">
           {itemsArr?.map((item, idx) => (

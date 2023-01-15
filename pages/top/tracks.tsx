@@ -41,6 +41,7 @@ const TopTracks = () => {
       }))}
       isLoading={topTracksRes?.isLoading}
       setTimeRangeFilter={getTimeRangeFilter}
+      showFilters={true}
     />
   );
 };

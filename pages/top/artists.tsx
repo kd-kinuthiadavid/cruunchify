@@ -45,6 +45,7 @@ const TopArtists = () => {
       btnText="generate playlist"
       isLoading={topArtistsRes?.isLoading}
       setTimeRangeFilter={getTimeRangeFilter}
+      showFilters={true}
     />
   );
 };
