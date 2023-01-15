@@ -11,7 +11,13 @@ const TopTracks = () => {
   } = useCrStore();
 
   const topTracksRes = useQuery(["top-tracks", accessToken], () =>
-    getTopItems(accessToken!, "tracks", refreshToken!, setAccessTknData)
+    getTopItems(
+      accessToken!,
+      "tracks",
+      refreshToken!,
+      setAccessTknData,
+      "short_term"
+    )
   );
   const topTracks = topTracksRes?.data;
 

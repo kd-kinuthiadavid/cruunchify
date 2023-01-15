@@ -14,7 +14,13 @@ const TopArtists = () => {
 
   // get top artists
   const topArtistsRes = useQuery(["top-artists", accessToken], () =>
-    getTopItems(accessToken!, "artists", refreshToken!, setAccessTknData)
+    getTopItems(
+      accessToken!,
+      "artists",
+      refreshToken!,
+      setAccessTknData,
+      "short_term"
+    )
   );
   const topArtists = topArtistsRes?.data;
 

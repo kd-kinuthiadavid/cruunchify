@@ -5,13 +5,14 @@ async function getTopItems(
   accessToken: string,
   item: string,
   refreshToken: string,
-  setAccessTknData: (payload: CrAccessTokenData) => void
+  setAccessTknData: (payload: CrAccessTokenData) => void,
+  timeRange: string
 ) {
   const decryptedToken = decryptToken(accessToken);
-  const url = `${process.env.NEXT_PUBLIC_SPOTIFY_API_BASE_URL}/v1/me/top/${item}`;
+  const url = `${process.env.NEXT_PUBLIC_SPOTIFY_API_BASE_URL}/v1/me/top/${item}?limit=50&time_range=${timeRange}`;
   console.log("???? url ???", url);
   try {
-    const res = await(
+    const res = await (
       await fetch(url, {
         headers: {
           Authorization: `Bearer ${decryptedToken}`,
@@ -20,7 +21,7 @@ async function getTopItems(
       })
     ).json();
     if (res.error && res.error.message !== "Invalid access token") {
-     await getRefreshedToken(refreshToken, setAccessTknData);
+      await getRefreshedToken(refreshToken, setAccessTknData);
       throw new Error(res.error.message, {
         ...res.error,
       });

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoadingBar from "react-top-loading-bar";
 
 interface TopItem {
@@ -19,6 +19,12 @@ interface TopItemsProps {
   isLoading: boolean;
 }
 
+interface TopItemsFilters {
+  recent: boolean;
+  sixMonths: boolean;
+  allTime: boolean;
+}
+
 const TopItems = ({
   title,
   description,
@@ -27,6 +33,11 @@ const TopItems = ({
   isLoading,
 }: TopItemsProps) => {
   const loaderRef = useRef<any>(null);
+  const [filters, setFilters] = useState<TopItemsFilters>({
+    recent: true,
+    sixMonths: false,
+    allTime: false,
+  });
 
   useEffect(() => {
     loaderRef?.current?.continuousStart();
@@ -35,6 +46,34 @@ const TopItems = ({
       loaderRef?.current?.complete();
     };
   }, []);
+
+  const toggleFiltersTimeRange = (filter: string) => {
+    switch (filter) {
+      case "recent":
+        setFilters({
+          recent: true,
+          sixMonths: false,
+          allTime: false,
+        });
+        break;
+      case "sixMonths":
+        setFilters({
+          recent: false,
+          sixMonths: true,
+          allTime: false,
+        });
+        break;
+      case "allTime":
+        setFilters({
+          recent: false,
+          sixMonths: false,
+          allTime: true,
+        });
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <main className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-y-20 lg:gap-x-28 mx-20 mb-10">
@@ -58,14 +97,29 @@ const TopItems = ({
       <section className="flex flex-col justify-center items-center gap-y-5 md:max-w-screen-lg">
         {/* filters */}
         <div className="flex justify-center items-center gap-x-7">
-          <small className="uppercase font-medium cursor-pointer hover:text-cr-light-green">
+          <small
+            className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
+              filters.recent ? "text-cr-light-green" : ""
+            }`}
+            onClick={() => toggleFiltersTimeRange("recent")}
+          >
             recent
           </small>
-          <small className="uppercase font-medium cursor-pointer hover:text-cr-light-green">
+          <small
+            className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
+              filters.sixMonths ? "text-cr-light-green" : ""
+            }`}
+            onClick={() => toggleFiltersTimeRange("sixMonths")}
+          >
             {" "}
             past 6 months
           </small>
-          <small className="uppercase font-medium cursor-pointer hover:text-cr-light-green">
+          <small
+            className={`uppercase font-medium cursor-pointer hover:text-cr-light-green ${
+              filters.allTime ? "text-cr-light-green" : ""
+            }`}
+            onClick={() => toggleFiltersTimeRange("allTime")}
+          >
             all time
           </small>
         </div>
