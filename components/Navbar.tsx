@@ -1,14 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import useCrStore from "../store";
 
 export default function Navbar() {
+  const {
+    accessTokenData: { accessToken },
+  } = useCrStore();
+
   return (
     <nav className="mx-10 my-8 flex justify-center mb-16">
       {/* far left nav items */}
       <ul className="flex gap-x-5 items-center">
         {/* logo */}
-        <Link href="/">
+        <Link href={accessToken ? "/dashboard" : "/"}>
           <ul className="flex items-center gap-x-3 cursor-pointer">
             <li className="flex items-center">
               <Image
