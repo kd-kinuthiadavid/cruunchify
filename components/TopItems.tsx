@@ -17,6 +17,7 @@ interface TopItemsProps {
   itemsArr: Array<TopItem>;
   btnText: string;
   isLoading: boolean;
+  setTimeRangeFilter: (filter: string) => void;
 }
 
 interface TopItemsFilters {
@@ -31,6 +32,7 @@ const TopItems = ({
   itemsArr,
   btnText,
   isLoading,
+  setTimeRangeFilter,
 }: TopItemsProps) => {
   const loaderRef = useRef<any>(null);
   const [filters, setFilters] = useState<TopItemsFilters>({
@@ -50,25 +52,34 @@ const TopItems = ({
   const toggleFiltersTimeRange = (filter: string) => {
     switch (filter) {
       case "recent":
-        setFilters({
-          recent: true,
-          sixMonths: false,
-          allTime: false,
-        });
+        {
+          setFilters({
+            recent: true,
+            sixMonths: false,
+            allTime: false,
+          });
+          setTimeRangeFilter("short_term");
+        }
         break;
       case "sixMonths":
-        setFilters({
-          recent: false,
-          sixMonths: true,
-          allTime: false,
-        });
+        {
+          setFilters({
+            recent: false,
+            sixMonths: true,
+            allTime: false,
+          });
+          setTimeRangeFilter("medium_term");
+        }
         break;
       case "allTime":
-        setFilters({
-          recent: false,
-          sixMonths: false,
-          allTime: true,
-        });
+        {
+          setFilters({
+            recent: false,
+            sixMonths: false,
+            allTime: true,
+          });
+          setTimeRangeFilter("long_term");
+        }
         break;
       default:
         break;

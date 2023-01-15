@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TopItems, { TopItem } from "../../components/TopItems";
 import { useQuery } from "@tanstack/react-query";
 
@@ -6,6 +6,7 @@ import getTopItems from "../../utils/requestUtils/getCurrentUserTopItems";
 import useCrStore from "../../store";
 
 const TopArtists = () => {
+  const [timeRangeQuery, setTimeRangeQuery] = useState("short_term");
   // get accessToken from the store
   const {
     accessTokenData: { accessToken, refreshToken },
@@ -13,18 +14,23 @@ const TopArtists = () => {
   } = useCrStore();
 
   // get top artists
-  const topArtistsRes = useQuery(["top-artists", accessToken], () =>
-    getTopItems(
-      accessToken!,
-      "artists",
-      refreshToken!,
-      setAccessTknData,
-      "short_term"
-    )
+  const topArtistsRes = useQuery(
+    ["top-artists", accessToken, timeRangeQuery],
+    () =>
+      getTopItems(
+        accessToken!,
+        "artists",
+        refreshToken!,
+        setAccessTknData,
+        timeRangeQuery
+      )
   );
   const topArtists = topArtistsRes?.data;
 
-  console.log(">>>> topArtistsRes >>>>", topArtists);
+  function getTimeRangeFilter(filter: string) {
+    setTimeRangeQuery(filter);
+  }
+
   return (
     <TopItems
       title="artists"
@@ -38,6 +44,7 @@ const TopArtists = () => {
       }))}
       btnText="generate playlist"
       isLoading={topArtistsRes?.isLoading}
+      setTimeRangeFilter={getTimeRangeFilter}
     />
   );
 };

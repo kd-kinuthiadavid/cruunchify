@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import useCrStore from "../../store";
 import { useQuery } from "@tanstack/react-query";
 import getTopItems from "../../utils/requestUtils/getCurrentUserTopItems";
 import TopItems, { TopItem } from "../../components/TopItems";
 
 const TopTracks = () => {
+  const [timeRangeQuery, setTimeRangeQuery] = useState("short_term");
   const {
     accessTokenData: { accessToken, refreshToken },
     setAccessTknData,
   } = useCrStore();
 
-  const topTracksRes = useQuery(["top-tracks", accessToken], () =>
-    getTopItems(
-      accessToken!,
-      "tracks",
-      refreshToken!,
-      setAccessTknData,
-      "short_term"
-    )
+  const topTracksRes = useQuery(
+    ["top-tracks", accessToken, timeRangeQuery],
+    () =>
+      getTopItems(
+        accessToken!,
+        "tracks",
+        refreshToken!,
+        setAccessTknData,
+        timeRangeQuery
+      )
   );
   const topTracks = topTracksRes?.data;
+
+  function getTimeRangeFilter(filter: string) {
+    setTimeRangeQuery(filter);
+  }
 
   return (
     <TopItems
@@ -33,6 +40,7 @@ const TopTracks = () => {
         images: track?.album?.images,
       }))}
       isLoading={topTracksRes?.isLoading}
+      setTimeRangeFilter={getTimeRangeFilter}
     />
   );
 };

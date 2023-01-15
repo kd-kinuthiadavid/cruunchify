@@ -10,9 +10,8 @@ async function getTopItems(
 ) {
   const decryptedToken = decryptToken(accessToken);
   const url = `${process.env.NEXT_PUBLIC_SPOTIFY_API_BASE_URL}/v1/me/top/${item}?limit=50&time_range=${timeRange}`;
-  console.log("???? url ???", url);
   try {
-    const res = await (
+    const res = await(
       await fetch(url, {
         headers: {
           Authorization: `Bearer ${decryptedToken}`,
