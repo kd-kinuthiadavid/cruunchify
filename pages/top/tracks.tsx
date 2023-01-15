@@ -6,11 +6,12 @@ import TopItems, { TopItem } from "../../components/TopItems";
 
 const TopTracks = () => {
   const {
-    accessTokenData: { accessToken },
+    accessTokenData: { accessToken, refreshToken },
+    setAccessTknData,
   } = useCrStore();
 
   const topTracksRes = useQuery(["top-tracks", accessToken], () =>
-    getTopItems(accessToken!, "tracks")
+    getTopItems(accessToken!, "tracks", refreshToken!, setAccessTknData)
   );
   const topTracks = topTracksRes?.data;
 

@@ -8,12 +8,13 @@ import useCrStore from "../../store";
 const TopArtists = () => {
   // get accessToken from the store
   const {
-    accessTokenData: { accessToken },
+    accessTokenData: { accessToken, refreshToken },
+    setAccessTknData,
   } = useCrStore();
 
   // get top artists
   const topArtistsRes = useQuery(["top-artists", accessToken], () =>
-    getTopItems(accessToken!, "artists")
+    getTopItems(accessToken!, "artists", refreshToken!, setAccessTknData)
   );
   const topArtists = topArtistsRes?.data;
 

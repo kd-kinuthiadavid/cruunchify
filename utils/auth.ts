@@ -1,5 +1,7 @@
 import { NextRouter } from "next/router";
 import CryptoJS from "crypto-js";
+import querystring from "querystring";
+import { CrAccessTokenData } from "../store";
 
 /**
  * Request authorization to access data
@@ -33,4 +35,51 @@ function decryptToken(token: string): string {
   ).toString(CryptoJS.enc.Utf8);
 }
 
-export { login, decryptToken };
+async function getRefreshedToken(
+  refreshToken: string,
+  setAccessTknData: (payload: CrAccessTokenData) => void
+) {
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization:
+      "Basic " +
+      new Buffer(
+        process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID +
+          ":" +
+          process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET
+      ).toString("base64"),
+  };
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SPOTIFY_ACS_BASE_URL}/api/token`,
+      {
+        method: "post",
+        headers: headers,
+        body: querystring.stringify({
+          grant_type: "refresh_token",
+          refresh_token: decryptToken(refreshToken),
+          client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
+        }),
+      }
+    );
+
+    const result = await res.json();
+    // update the store
+    const accessTokenData: CrAccessTokenData = {
+      accessToken: result.access_token,
+      refreshToken: decryptToken(refreshToken),
+      expiresIn: result.expires_in,
+      scope: result.scope,
+      tokenType: result.token_type,
+    };
+
+    setAccessTknData(accessTokenData);
+    // refresh the page
+    window.location.reload();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { login, decryptToken, getRefreshedToken };

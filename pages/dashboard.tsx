@@ -13,7 +13,8 @@ const dashboard = () => {
   const loaderRef = useRef<any>(null);
   const {
     currentUser,
-    accessTokenData: { accessToken },
+    accessTokenData: { accessToken, refreshToken },
+    setAccessTknData,
   } = useCrStore();
 
   useEffect(() => {
@@ -36,13 +37,23 @@ const dashboard = () => {
 
   // get artists that the current user follows
   const followingRes = useQuery(["following", accessToken], () =>
-    getCurrentUserStats(accessToken!, "following?type=artist")
+    getCurrentUserStats(
+      accessToken!,
+      "following?type=artist",
+      refreshToken!,
+      setAccessTknData
+    )
   );
   const followingTotal = followingRes?.data?.artists?.total;
 
   // get the current user's playlists
   const playlistsRes = useQuery(["playlists", accessToken], () =>
-    getCurrentUserStats(accessToken!, "playlists")
+    getCurrentUserStats(
+      accessToken!,
+      "playlists",
+      refreshToken!,
+      setAccessTknData
+    )
   );
   const playlistsTotal = playlistsRes?.data?.total;
 

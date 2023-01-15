@@ -1,6 +1,12 @@
-import { decryptToken } from "../auth";
+import { CrAccessTokenData } from "../../store";
+import { decryptToken, getRefreshedToken } from "../auth";
 
-async function getCurrentUserStats(accessToken: string, stat: string) {
+async function getCurrentUserStats(
+  accessToken: string,
+  stat: string,
+  refreshToken: string,
+  setAccessTknData: (payload: CrAccessTokenData) => void
+) {
   const decryptedToken = decryptToken(accessToken);
   const url = `${process.env.NEXT_PUBLIC_SPOTIFY_API_BASE_URL}/v1/me/${stat}`;
   try {
@@ -13,14 +19,8 @@ async function getCurrentUserStats(accessToken: string, stat: string) {
       })
     ).json();
     if (res.error && res.error.message !== "Invalid access token") {
-      /**
-       * @TODO:
-       * - create a request wrapper
-       * - on 'invalid access token' error:
-       *      - use the refresh token to get a new access token
-       *      - update the store with the new access token
-       *      - refresh the page
-       */
+      await getRefreshedToken(refreshToken, setAccessTknData);
+
       throw new Error(res.error.message, {
         ...res.error,
       });
