@@ -136,7 +136,7 @@ const dashboard = () => {
               top tracks
             </div>
           </Link>
-          <Link href="/top/genres">
+          {/* <Link href="/top/genres">
             <div
               className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
               style={{
@@ -146,7 +146,7 @@ const dashboard = () => {
             >
               top genres
             </div>
-          </Link>
+          </Link> */}
           <Link href="/top/shows">
             <div
               className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
