@@ -9,6 +9,7 @@ interface TopItem {
   id: string;
   href: string;
   album?: any;
+  show?: any;
 }
 
 interface TopItemsProps {
@@ -93,7 +94,7 @@ const TopItems = ({
       {isLoading ? <LoadingBar color="#33FF7A" ref={loaderRef} /> : null}
       <section className="flex flex-col gap-5 lg:gap-y-8 justify-center text-center lg:justify-start lg:text-left md:mt-16">
         <h1 className="text-7xl capitalize font-extrabold">
-          your top <br />
+          your {title === "shows" ? "saved" : "top"} <br />
           <span className="text-cr-green">{title}</span>
         </h1>
         <p className="text-3xl font-thin max-w-md">{description}</p>

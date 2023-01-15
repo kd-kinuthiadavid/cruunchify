@@ -8,7 +8,7 @@ async function getCurrentUserStats(
   setAccessTknData: (payload: CrAccessTokenData) => void
 ) {
   const decryptedToken = decryptToken(accessToken);
-  const url = `${process.env.NEXT_PUBLIC_SPOTIFY_API_BASE_URL}/v1/me/${stat}`;
+  const url = `${process.env.NEXT_PUBLIC_SPOTIFY_API_BASE_URL}/v1/me/${stat}?&limit=50`;
   try {
     const res = await (
       await fetch(url, {
