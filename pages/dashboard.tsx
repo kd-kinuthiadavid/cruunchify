@@ -63,12 +63,16 @@ const dashboard = () => {
         <LoadingBar color="#33FF7A" ref={loaderRef} />
       ) : null}
       <section className="flex flex-col gap-y-10 md:max-w-lg">
-        <div
-          className="w-full h-[300px] md:h-[420px] bg-no-repeat bg-center bg-cover border-5 border-red-500 rounded-lg"
-          style={{
-            backgroundImage: `url(${currentUserProfilePhotoURL})`,
-          }}
-        ></div>
+        <div className="w-full h-[300px] md:h-[420px] relative bg-no-repeat bg-center bg-cover border-5 rounded-lg">
+          <Image
+            src={currentUserProfilePhotoURL}
+            layout="fill"
+            className="rounded-lg"
+            priority
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8N02kHgAGKwIZBBZ7nwAAAABJRU5ErkJggg=="
+          />
+        </div>
         <div className="flex flex-col gap-y-2">
           {/* username */}
           <h1 className="text-5xl md:text-6xl font-extrabold">
@@ -77,17 +81,15 @@ const dashboard = () => {
           {/* bio stats */}
           <div className="flex flex-wrap justify-between">
             <div className="flex items-center md:items-end gap-x-2">
-              <h4 className="text-3xl font-semibold">
-                {user.followers?.total}
-              </h4>{" "}
+              <h4 className="text-3xl">{user.followers?.total}</h4>{" "}
               <h4 className="text-1xl font-thin">followers</h4>
             </div>
             <div className="flex items-center md:items-end gap-x-2">
-              <h4 className="text-3xl font-semibold">{followingTotal}</h4>{" "}
+              <h4 className="text-3xl">{followingTotal}</h4>{" "}
               <h4 className="text-1xl font-thin">following</h4>
             </div>
             <div className="flex items-center md:items-end gap-x-2">
-              <h4 className="text-3xl font-semibold">{playlistsTotal}</h4>{" "}
+              <h4 className="text-3xl">{playlistsTotal}</h4>{" "}
               <h4 className="text-1xl font-thin">playlists</h4>
             </div>
           </div>
