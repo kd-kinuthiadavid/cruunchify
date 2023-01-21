@@ -15,19 +15,19 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center text-center p-3 lg:text-left lg:flex-row lg:mx-32 lg:justify-between lg:gap-x-20">
+      <main className="flex flex-col justify-center items-center text-center p-3 h-full">
         {/* hero text */}
-        <div className="flex flex-col gap-y-8 lg:gap-y-16 lg:max-w-1/2">
-          <h1 className="text-6xl lg:text-8xl font-black">
+        <div className="flex flex-col items-center gap-y-8 md:gap-y-16 lg:max-w-1/2 lg:mt-10">
+          <h1 className="text-6xl md:text-9xl font-black">
             Discover how <br /> you{" "}
             <span className="text-cr-green">listen.</span>
           </h1>
-          <p className="text-xl lg:text-3xl font-light">
+          <p className="text-xl md:text-4xl font-light lg:leading-loose">
             Explore your music taste, profile <br /> and create awesome
             playlists
           </p>
           <button
-            className="flex justify-center items-center py-5 gap-x-5 md:max-lg:hidden bg-cr-light-green rounded-md lg:max-w-lg lg:py-8"
+            className="flex justify-center items-center p-4 md:p-5 lg:py-5 lg:px-10 gap-x-5 bg-cr-light-green rounded-md md:max-w-xl"
             onClick={() => login(router)}
           >
             <Image
@@ -36,66 +36,9 @@ const Home: NextPage = () => {
               width={30}
               alt="icon: cruunchify logo"
             />
-            <small className="text-lg lg:text-xl capitalize">
+            <small className="text-lg lg:text-2xl font-semibold capitalize">
               Continue with spotify
             </small>
-          </button>
-        </div>
-        {/* hero image section */}
-        <div className="hidden md:block md:max-lg:flex flex-col lg:max-w-1/2">
-          {/* hero image */}
-          <div
-            className="w-[400px] h-[500px] bg-no-repeat bg-cover border-5 rounded-lg relative p-5 md:max-lg:my-5 md:w-[500px] lg:h-[600px]"
-            style={{
-              backgroundImage:
-                "linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%), url('/images/lea-paci-landing.png')",
-            }}
-          >
-            <div className="absolute top-5 left-5">
-              <Image
-                src="/icons/Spotify.png"
-                height={40}
-                width={40}
-                alt="icon: spotify logo"
-              />
-            </div>
-            <div className="absolute bottom-5 w-full">
-              <h3 className="text-5xl font-bold pb-5 text-left">Léa Paci</h3>
-              {/* Genres and Actions */}
-              <div className="flex justify-between">
-                {/* Genres */}
-                <div className="flex gap-5">
-                  <div className="px-5 py-3 bg-cr-genre rounded-3xl capitalize">
-                    french pop
-                  </div>
-                  <div className="px-5 py-3 bg-white text-black flex justify-center items-center rounded-3xl">
-                    +2
-                  </div>
-                </div>
-                {/* Play Btn */}
-                <div className="absolute bottom right-10">
-                  <Image
-                    src="/icons/Play.png"
-                    height={50}
-                    width={50}
-                    alt="icon: play on spotify"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* CTA: only visible in md */}
-          <button
-            className="flex justify-center items-center py-5 gap-x-5 bg-cr-light-green rounded-md lg:hidden"
-            onClick={() => login(router)}
-          >
-            <Image
-              src="/icons/Spotify.png"
-              height={30}
-              width={30}
-              alt="icon: cruunchify logo"
-            />
-            <small className="text-lg capitalize">Continue with spotify</small>
           </button>
         </div>
       </main>
