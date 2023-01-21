@@ -140,25 +140,73 @@ const TopItems = ({
           </div>
         ) : null}
         {/* item cards */}
-        <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll">
-          {itemsArr?.map((item, idx) => (
-            <div
-              key={idx}
-              className="rounded-lg cursor-pointer hover:text-cr-light-green"
-            >
-              <Image
-                className="rounded-lg"
-                src={item.images[0].url}
-                width={200}
-                height={200}
-                alt={`cruunchify top ${title}: ${item.name}`}
-              />
-              <p className="font-medium text-lg text-center max-w-[200px] truncate">
-                {idx + 1}. {item.name}
-              </p>
+        {isLoading ? (
+          <div className="flex flex-wrap justify-center gap-x-2 gap-y-4 max-h-[500px] md:max-h-[700px] mb-20 lg:mb-0 overflow-y-scroll animate-pulse">
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
             </div>
-          ))}
-        </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a]"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="w-[180px] h-[180px] bg-[#2b2a2a]"></div>
+              <div className="w-[140px] h-[20px] bg-[#2b2a2a] rounded-sm"></div>
+              <div className="w-[100px] h-[10px] bg-[#2b2a2a] rounded-sm"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll mb-20 lg:mb-0">
+            {itemsArr?.map((item, idx) => (
+              <div
+                key={idx}
+                className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a]"
+              >
+                <Image
+                  className="rounded-lg drop-shadow-md hover:drop-shadow-lg"
+                  src={item.images[0].url}
+                  width={200}
+                  height={200}
+                  alt={`cruunchify top ${title}: ${item.name}`}
+                  priority
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                />
+                <p className="font-medium text-lg text-left max-w-[200px] truncate my-2">
+                  {idx + 1}. {item.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );
