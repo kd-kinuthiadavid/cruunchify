@@ -62,16 +62,16 @@ const callback = ({
 
   if (data.error) {
     return (
-      <section className="h-screen flex flex-col items-center gap-y-10 text-center">
-        <h1 className="font-black text-9xl">Oops !</h1>
-        <h2 className="font-black text-6xl text-cr-light-green">
+      <section className="h-screen flex flex-col items-center gap-y-10 text-center mx-5">
+        <h1 className="font-black text-8xl md:text-9xl">Oops !</h1>
+        <h2 className="font-black text-5xl md:text-6xl text-cr-light-green">
           We hit a snag.
         </h2>
-        <p className="font-bold text-3xl max-w-lg leading-normal">
+        <p className="font-bold text-xl md:text-3xl max-w-lg leading-normal">
           Something went wrong when connecting to Spotify. Please try again.
         </p>
         <button
-          className="flex items-center bg-cr-light-green px-10 py-5 gap-x-5 rounded-md"
+          className="flex items-center bg-cr-light-green px-10 py-5 gap-x-5 rounded-md mb-10"
           onClick={() => login(router)}
         >
           <Image
@@ -100,10 +100,10 @@ const callback = ({
   return (
     <main className="h-screen flex flex-col items-center">
       <LoadingBar color="#33FF7A" ref={loaderRef} />
-      <section className="flex justify-center gap-x-10">
+      <section className="flex justify-center gap-x-4 md:gap-x-10 mx-2">
         <div className="flex flex-col">
           <h1
-            className={`text-3xl ${
+            className={`text-xl md:text-3xl ${
               currentTab.discover ? "text-cr-light-green" : "text-cr-muted"
             } font-extrabold`}
           >
@@ -112,7 +112,7 @@ const callback = ({
         </div>
         <div className="flex flex-col">
           <h1
-            className={`text-3xl ${
+            className={`text-xl md:text-3xl ${
               currentTab.explore ? "text-cr-light-green" : "text-cr-muted"
             } font-extrabold`}
           >
@@ -121,7 +121,7 @@ const callback = ({
         </div>
         <div className="flex flex-col">
           <h1
-            className={`text-3xl ${
+            className={`text-xl md:text-3xl ${
               currentTab.create ? "text-cr-light-green" : "text-cr-muted"
             } font-extrabold`}
           >
@@ -130,7 +130,7 @@ const callback = ({
         </div>
       </section>
       {currentTab.discover ? (
-        <section className="flex  flex-col items-center mt-10 gap-10">
+        <section className="flex  flex-col items-center mt-10 gap-10 mx-2">
           <h2 className="text-6xl font-bold max-w-md text-center capitalize leading-tight">
             Discover how you listen to music
           </h2>
@@ -150,6 +150,12 @@ const callback = ({
           </h2>
         </section>
       ) : null}
+      <button
+        className="flex items-center bg-cr-light-green px-10 py-5 gap-x-5 rounded-md my-10"
+        onClick={() => router.push("/dashboard")}
+      >
+        <small className="text-lg lg:text-xl capitalize">Skip Intro</small>
+      </button>
     </main>
   );
 };
