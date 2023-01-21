@@ -22,7 +22,7 @@ const Home: NextPage = () => {
             Discover how <br /> you{" "}
             <span className="text-cr-green">listen.</span>
           </h1>
-          <p className="text-xl md:text-4xl font-light lg:leading-loose">
+          <p className="text-xl md:text-4xl font-light lg:leading-relaxed">
             Explore your music taste, profile <br /> and create awesome
             playlists
           </p>
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
               width={30}
               alt="icon: cruunchify logo"
             />
-            <small className="text-lg lg:text-2xl font-semibold capitalize">
+            <small className="text-lg lg:text-2xl font-regular capitalize">
               Continue with spotify
             </small>
           </button>
