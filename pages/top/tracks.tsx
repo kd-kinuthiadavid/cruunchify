@@ -31,7 +31,17 @@ const TopTracks = () => {
   return (
     <TopItems
       title="tracks"
-      description="Showing your favourite tracks in the past 30 days"
+      description={`Showing your ${
+        timeRangeQuery === "long_term" ? "all time" : ""
+      } favourite tracks${
+        timeRangeQuery === "long_term" ? "" : " in the past "
+      }${
+        timeRangeQuery === "short_term"
+          ? "30 days"
+          : timeRangeQuery === "medium_term"
+          ? "6 months"
+          : ""
+      }`}
       btnText="generate playlist"
       itemsArr={topTracks?.items?.map((track: TopItem) => ({
         name: track.name,

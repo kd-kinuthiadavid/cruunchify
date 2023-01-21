@@ -34,7 +34,17 @@ const TopArtists = () => {
   return (
     <TopItems
       title="artists"
-      description="Showing your favourite artists in the past 30 days"
+      description={`Showing your ${
+        timeRangeQuery === "long_term" ? "all time" : ""
+      } favourite artists${
+        timeRangeQuery === "long_term" ? "" : " in the past "
+      }${
+        timeRangeQuery === "short_term"
+          ? "30 days"
+          : timeRangeQuery === "medium_term"
+          ? "6 months"
+          : ""
+      }`}
       itemsArr={topArtists?.items?.map((artist: TopItem) => ({
         images: artist.images,
         name: artist.name,
