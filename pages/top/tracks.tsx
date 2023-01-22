@@ -48,6 +48,7 @@ const TopTracks = () => {
         type: track.type,
         id: track.id,
         images: track?.album?.images,
+        uri: track.uri,
       }))}
       isLoading={topTracksRes?.isLoading}
       setTimeRangeFilter={getTimeRangeFilter}

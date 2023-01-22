@@ -51,6 +51,7 @@ const TopArtists = () => {
         type: artist.type,
         id: artist.id,
         href: artist.href,
+        uri: artist.uri,
       }))}
       btnText="generate playlist"
       isLoading={topArtistsRes?.isLoading}
