@@ -9,6 +9,7 @@ import createPlaylist, {
 } from "../utils/requestUtils/createPlaylist";
 import { getRefreshedToken } from "../utils/auth";
 import updatePlaylist from "../utils/requestUtils/updatePlaylist";
+import TopItemCard from "./TopItemCard";
 
 interface TopItem {
   images: Array<any>;
@@ -266,24 +267,13 @@ const TopItems = ({
         ) : (
           <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll mb-20 lg:mb-0">
             {itemsArr?.map((item, idx) => (
-              <div
+              <TopItemCard
                 key={idx}
-                className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a]"
-              >
-                <Image
-                  className="rounded-lg drop-shadow-md hover:drop-shadow-lg"
-                  src={item.images[0].url}
-                  width={200}
-                  height={200}
-                  alt={`cruunchify top ${title}: ${item.name}`}
-                  priority
-                  placeholder="blur"
-                  blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                />
-                <p className="font-medium text-lg text-left max-w-[200px] truncate my-2">
-                  {idx + 1}. {item.name}
-                </p>
-              </div>
+                idx={idx + 1}
+                imgSrc={item.images[0].url}
+                topItem={title}
+                title={item.name}
+              />
             ))}
           </div>
         )}
