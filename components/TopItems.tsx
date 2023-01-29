@@ -10,6 +10,7 @@ import createPlaylist, {
 import { getRefreshedToken } from "../utils/auth";
 import updatePlaylist from "../utils/requestUtils/updatePlaylist";
 import TopItemCard from "./TopItemCard";
+import CrDialog from "./CrDialog";
 
 interface TopItem {
   images: Array<any>;
@@ -62,6 +63,8 @@ const TopItems = ({
   }>({});
 
   const [URIs, setURIs] = useState<Array<string>>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalErr, setIsModalErr] = useState(false);
 
   useEffect(() => {
     loaderRef?.current?.continuousStart();
@@ -125,8 +128,24 @@ const TopItems = ({
   } = useCrStore();
 
   const createPlaylistPayload = {
-    name: `Top ${title} playlist`,
-    description: `A playlist of my top ${title} created in cruunchify.`,
+    name: `Top ${title} playlist: ${
+      filters.allTime
+        ? "All Time"
+        : filters.sixMonths
+        ? "Last 60 Days"
+        : filters.recent
+        ? "Last 30 Days"
+        : "Made by Cruunchify"
+    }`,
+    description: `A playlist of my ${
+      filters.allTime ? "all time" : ""
+    } top ${title} ${
+      filters.recent
+        ? "in the past 30 days"
+        : filters.sixMonths
+        ? "in the past 60 days"
+        : ""
+    }. Created in cruunchify.`,
     collaborative: false,
     public: true,
   };
@@ -151,16 +170,6 @@ const TopItems = ({
     if (title === "tracks") {
       playlistMutation.mutate(createPlaylistPayload, {
         onSuccess: (data, variables, context) => {
-          console.log(
-            "??? success creating playlist ????",
-            "??? data ???",
-            data,
-            "??? variables ????",
-            variables,
-            "??? context ???",
-            context
-          );
-
           // update state
           // this will be important when showing the success modal
           setCreatedPlaylist({
@@ -175,30 +184,29 @@ const TopItems = ({
             { uris: URIs, playlistId: data.id },
             {
               onSuccess: (data, variables, _) => {
-                console.log(
-                  "@@@@ SUCCESS UPDATING PLAYLIST @@@",
-                  data,
-                  variables
-                );
-                // @TODO: show the success modal
+                setIsModalOpen(true);
               },
               onError: (error, variables, _) => {
-                console.error(
-                  "@@@ ERROR UPDATING PLAYLIST @@@",
-                  error,
-                  variables
-                );
-                // @TODO: show an error snackbar
+                setIsModalErr(true);
               },
             }
           );
         },
         onError: (error, variables, context) => {
-          console.log("#### ERROR: #####", error, variables, context);
-          // @TODO: show an error snackbar
+          setIsModalErr(true);
         },
       });
     }
+  }
+
+  function openPlaylistInSpotify() {
+    window.open(createdPlaylist.externalUrl, "_blank");
+    onModalClose();
+  }
+
+  function onModalClose() {
+    setIsModalErr(false);
+    setIsModalOpen(false);
   }
 
   return (
@@ -278,6 +286,34 @@ const TopItems = ({
           </div>
         )}
       </section>
+
+      <CrDialog isOpen={isModalOpen} onModalClose={onModalClose}>
+        <div className="flex flex-col gap-y-5">
+          <div className="flex gap-5 items-center">
+            <i
+              className={`text-3xl ${
+                isModalErr
+                  ? "fa-solid fa-triangle-exclamation text-red-600"
+                  : "fa-regular fa-circle-check text-cr-green"
+              } `}
+            ></i>
+            <p className={`font-semibold text-3xl text-cr-green`}>
+              {isModalErr ? "Oops! That didn't work." : "Success"}
+            </p>
+          </div>
+          <p className="text-xl">
+            {isModalErr
+              ? "Something went wrong while creating your playlist. Please try again"
+              : "Your playlist was created successfully"}
+          </p>
+          <button
+            className="btn-primary mt-5 hover:bg-cr-modal"
+            onClick={isModalErr ? generatePlaylist : openPlaylistInSpotify}
+          >
+            {isModalErr ? "Re-Try" : "Open In Spotify"}
+          </button>
+        </div>
+      </CrDialog>
     </main>
   );
 };

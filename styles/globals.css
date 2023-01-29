@@ -4,7 +4,7 @@
 
 @layer components {
   .btn-primary {
-    @apply flex justify-center items-center bg-cr-light-green rounded-md py-5 gap-x-5 capitalize
+    @apply flex justify-center items-center bg-cr-light-green hover:bg-black hover:border-2 hover:border-cr-green hover:text-cr-green rounded-md py-5 gap-x-5 capitalize
   }
 }
 
