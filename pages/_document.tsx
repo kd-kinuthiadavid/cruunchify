@@ -49,6 +49,10 @@ export default class MyDocument extends Document {
         <body className="font-sans h-screen">
           <Main />
           <NextScript />
+          <script
+            src="https://kit.fontawesome.com/26eccec266.js"
+            crossOrigin="anonymous"
+          ></script>
         </body>
       </Html>
     );
