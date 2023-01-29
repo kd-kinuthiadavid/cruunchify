@@ -209,6 +209,10 @@ const TopItems = ({
     setIsModalOpen(false);
   }
 
+  function shareTopItems() {
+    alert("coming soon");
+  }
+
   return (
     <main className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-y-20 lg:gap-x-28 mx-20 mb-10">
       {isLoading ? <LoadingBar color="#33FF7A" ref={loaderRef} /> : null}
@@ -218,25 +222,28 @@ const TopItems = ({
           <span className="text-cr-green">{title}</span>
         </h1>
         <p className="text-3xl font-thin max-w-md">{description}</p>
-        {title === "tracks" ? (
-          <button className="btn-primary mt-5" onClick={generatePlaylist}>
-            <Image
-              src="/icons/Playlist.png"
-              height={30}
-              width={30}
-              alt="icon: cruunchify logo"
-            />
-            {/* {btnText} */}
-            {playlistMutation.isLoading || updatePlaylistMutation.isLoading ? (
-              <svg
-                className="animate-spin h-5 w-5 mr-3 ..."
-                viewBox="0 0 24 24"
-              ></svg>
-            ) : (
-              `${btnText}`
-            )}
-          </button>
-        ) : null}
+        <button
+          className="btn-primary mt-5"
+          onClick={title === "tracks" ? generatePlaylist : shareTopItems}
+        >
+          <Image
+            src="/icons/Playlist.png"
+            height={30}
+            width={30}
+            alt="icon: cruunchify logo"
+          />
+          {/* {btnText} */}
+          {playlistMutation.isLoading || updatePlaylistMutation.isLoading ? (
+            <svg
+              className="animate-spin h-5 w-5 mr-3 ..."
+              viewBox="0 0 24 24"
+            ></svg>
+          ) : title === "tracks" ? (
+            `${btnText}`
+          ) : (
+            "Share"
+          )}
+        </button>
       </section>
       <section className="flex flex-col justify-center items-center gap-y-5 md:max-w-screen-lg">
         {/* filters */}
