@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface TopItemCardProps {
@@ -6,11 +7,16 @@ interface TopItemCardProps {
   topItem: string;
   title: string;
   idx: number;
+  id: string;
 }
 
-const TopItemCard = ({ imgSrc, topItem, title, idx }: TopItemCardProps) => {
+const TopItemCard = ({ imgSrc, topItem, title, idx, id }: TopItemCardProps) => {
+  const router = useRouter();
   return (
-    <div className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a]">
+    <div
+      className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a]"
+      onClick={() => router.push(`/top/${topItem}/${id}`)}
+    >
       <Image
         className="rounded-lg drop-shadow-md hover:drop-shadow-lg"
         src={imgSrc}

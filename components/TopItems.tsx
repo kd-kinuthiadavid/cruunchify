@@ -288,6 +288,7 @@ const TopItems = ({
                 imgSrc={item.images[0].url}
                 topItem={title}
                 title={item.name}
+                id={item.id}
               />
             ))}
           </div>
