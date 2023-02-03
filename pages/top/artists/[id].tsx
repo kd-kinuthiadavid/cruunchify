@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import useCrStore from "../../../store";
 import getArtistDetails from "../../../utils/requestUtils/getArtistDetails";
 import Image from "next/image";
-import { formatNumber } from "../../../utils";
 import ArtistInfo from "../../../components/Artists/ArtistInfo";
-import TopItemsLoader from "../../../components/TopItemsLoader";
-import TopItemCard from "../../../components/TopItemCard";
+import ArtistTopSongs from "../../../components/Artists/ArtistTopSongs";
+import ArtistAlbums from "../../../components/Artists/ArtistAlbums";
+import RelatedArtists from "../../../components/Artists/RelatedArtists";
 
 interface ArtistDetailFilters {
   songs: boolean;
@@ -22,7 +22,6 @@ const ArtistDetail = () => {
     setAccessTknData,
   } = useCrStore();
   const [artistImgURL, setArtistImgURL] = useState("");
-  const [itemsArr, setItemsArr] = useState([]);
   const [filters, setFilters] = useState<ArtistDetailFilters>({
     songs: true,
     albums: false,
@@ -52,7 +51,7 @@ const ArtistDetail = () => {
         setAccessTknData
       )
   );
-  const topSongs = artistSongsRes.data;
+  const topSongs = artistSongsRes.data?.tracks;
 
   // get artist's albums
   const artistAlbumsRes = useQuery(
@@ -65,7 +64,7 @@ const ArtistDetail = () => {
         setAccessTknData
       )
   );
-  const albums = artistAlbumsRes.data;
+  const albums = artistAlbumsRes.data?.items;
 
   // get artist's albums
   const RecommendedArtistsRes = useQuery(
@@ -78,24 +77,11 @@ const ArtistDetail = () => {
         setAccessTknData
       )
   );
-  const recommendedArtists = RecommendedArtistsRes.data;
+  const recommendedArtists = RecommendedArtistsRes.data?.artists;
 
-  console.log(">>>> albums >>>>", albums);
   useEffect(() => {
     setArtistImgURL(artistRes.data?.images[0]?.url);
   }, [artistRes]);
-
-  useEffect(() => {
-    if (filters.songs) {
-      setItemsArr(topSongs?.tracks);
-    } else if (filters.recommended) {
-      setItemsArr(recommendedArtists?.artists);
-    } else if (filters.albums) {
-      setItemsArr(albums.items);
-    } else {
-      setItemsArr(topSongs?.tracks);
-    }
-  }, [filters, topSongs]);
 
   const toggleFiltersTimeRange = (filter: string) => {
     switch (filter) {
@@ -200,28 +186,24 @@ const ArtistDetail = () => {
               recommended artists
             </small>
           </div>
-          {RecommendedArtistsRes.isLoading ||
-          artistAlbumsRes.isLoading ||
-          artistSongsRes.isLoading ? (
-            <TopItemsLoader />
-          ) : (
-            <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll mb-20 lg:mb-0">
-              {itemsArr?.map((item, idx) => (
-                <TopItemCard
-                  key={idx}
-                  idx={idx + 1}
-                  imgSrc={
-                    filters.songs
-                      ? item?.album?.images[0].url
-                      : item.images[0].url
-                  }
-                  topItem={item.type}
-                  title={item.name}
-                  id={item.id}
-                />
-              ))}
-            </div>
-          )}
+          <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll mb-20 lg:mb-0">
+            {filters.songs ? (
+              <ArtistTopSongs
+                isLoading={artistSongsRes.isLoading}
+                topSongs={topSongs}
+              />
+            ) : filters.albums ? (
+              <ArtistAlbums
+                isLoading={artistAlbumsRes.isLoading}
+                albums={albums}
+              />
+            ) : filters.recommended ? (
+              <RelatedArtists
+                isLoading={RecommendedArtistsRes.isLoading}
+                relatedArtists={recommendedArtists}
+              />
+            ) : null}
+          </div>
         </div>
       </section>
     </main>

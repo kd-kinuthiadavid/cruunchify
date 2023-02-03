@@ -3,11 +3,14 @@ import { formatNumber } from "../../utils";
 
 const ArtistInfo = ({ artist }: { artist: any }) => {
   return (
-    <div className="mb-5 flex flex-col gap-y-4 lg:items-center">
+    <div className="mb-5 flex flex-col items-center gap-y-4">
       <h1 className="font-black text-7xl">{artist?.name}</h1>
-      <div className="flex gap-2 flex-wrap max-w-lg">
+      <div className="flex justify-center gap-2 flex-wrap max-w-lg">
         {artist?.genres?.map((genre: string, idx: number) => (
-          <p className="bg-cr-muted py-3 px-5 rounded-3xl font-semibold capitalize">
+          <p
+            className="bg-cr-muted py-3 px-5 rounded-3xl font-semibold capitalize"
+            key={idx}
+          >
             {genre}
           </p>
         ))}
