@@ -6,6 +6,9 @@
   .btn-primary {
     @apply flex justify-center items-center bg-cr-light-green hover:bg-black hover:border-2 hover:border-cr-green hover:text-cr-green rounded-md py-5 gap-x-5 capitalize
   }
+  .btn-sec {
+    @apply flex justify-center items-center bg-cr-modal border-2 border-cr-green text-cr-green rounded-md py-5 gap-x-5 capitalize
+  }
 }
 
 html,

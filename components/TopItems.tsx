@@ -235,7 +235,7 @@ const TopItems = ({
           {/* {btnText} */}
           {playlistMutation.isLoading || updatePlaylistMutation.isLoading ? (
             <svg
-              className="animate-spin h-5 w-5 mr-3 ..."
+              className="animate-spin h-5 w-5 mr-3 text-white"
               viewBox="0 0 24 24"
             ></svg>
           ) : title === "tracks" ? (
