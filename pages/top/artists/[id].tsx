@@ -6,6 +6,8 @@ import getArtistDetails from "../../../utils/requestUtils/getArtistDetails";
 import Image from "next/image";
 import { formatNumber } from "../../../utils";
 import ArtistInfo from "../../../components/Artists/ArtistInfo";
+import TopItemsLoader from "../../../components/TopItemsLoader";
+import TopItemCard from "../../../components/TopItemCard";
 
 interface ArtistDetailFilters {
   songs: boolean;
@@ -20,6 +22,7 @@ const ArtistDetail = () => {
     setAccessTknData,
   } = useCrStore();
   const [artistImgURL, setArtistImgURL] = useState("");
+  const [itemsArr, setItemsArr] = useState([]);
   const [filters, setFilters] = useState<ArtistDetailFilters>({
     songs: true,
     albums: false,
@@ -77,10 +80,22 @@ const ArtistDetail = () => {
   );
   const recommendedArtists = RecommendedArtistsRes.data;
 
-  console.log(">>>> topSongs >>>>", topSongs);
+  console.log(">>>> albums >>>>", albums);
   useEffect(() => {
     setArtistImgURL(artistRes.data?.images[0]?.url);
   }, [artistRes]);
+
+  useEffect(() => {
+    if (filters.songs) {
+      setItemsArr(topSongs?.tracks);
+    } else if (filters.recommended) {
+      setItemsArr(recommendedArtists?.artists);
+    } else if (filters.albums) {
+      setItemsArr(albums.items);
+    } else {
+      setItemsArr(topSongs?.tracks);
+    }
+  }, [filters, topSongs]);
 
   const toggleFiltersTimeRange = (filter: string) => {
     switch (filter) {
@@ -117,8 +132,8 @@ const ArtistDetail = () => {
   };
 
   return (
-    <main className="flex flex-col justify-center items-center gap-y-10 lg:flex-row lg:gap-x-28 lg:mx-20">
-      <section className="flex flex-col gap-y-5 w-3/4 md:w-2/4 lg:max-w-md">
+    <main className="flex flex-col justify-center items-center lg:items-start gap-y-10 lg:flex-row lg:gap-x-28 lg:mx-20">
+      <section className="flex flex-col gap-y-5 w-3/4 md:w-2/4 lg:max-w-md h-full">
         <div className="h-[300px] md:h-[420px] relative bg-no-repeat bg-center bg-cover border-5 rounded-lg">
           <Image
             src={artistImgURL}
@@ -185,6 +200,28 @@ const ArtistDetail = () => {
               recommended artists
             </small>
           </div>
+          {RecommendedArtistsRes.isLoading ||
+          artistAlbumsRes.isLoading ||
+          artistSongsRes.isLoading ? (
+            <TopItemsLoader />
+          ) : (
+            <div className="flex flex-wrap gap-5 justify-center items-center max-h-[500px] md:max-h-[700px] overflow-y-scroll mb-20 lg:mb-0">
+              {itemsArr?.map((item, idx) => (
+                <TopItemCard
+                  key={idx}
+                  idx={idx + 1}
+                  imgSrc={
+                    filters.songs
+                      ? item?.album?.images[0].url
+                      : item.images[0].url
+                  }
+                  topItem={item.type}
+                  title={item.name}
+                  id={item.id}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>
