@@ -133,7 +133,7 @@ const ArtistDetail = () => {
 
   return (
     <main className="flex flex-col justify-center items-center lg:items-start gap-y-10 lg:flex-row lg:gap-x-28 lg:mx-20">
-      <section className="flex flex-col gap-y-5 w-3/4 md:w-2/4 lg:max-w-md h-full">
+      <section className="flex flex-col gap-y-5 w-3/4 md:w-2/4 lg:max-w-md h-full lg:sticky lg:top-40">
         <div className="h-[300px] md:h-[420px] relative bg-no-repeat bg-center bg-cover border-5 rounded-lg">
           <Image
             src={artistImgURL}
