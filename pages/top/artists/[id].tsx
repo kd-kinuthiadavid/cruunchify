@@ -27,12 +27,57 @@ const ArtistDetail = () => {
   });
   const artistId = router.query?.id as string;
 
+  // get artist details
   const artistRes = useQuery(["artist-detail", artistId, accessToken], () =>
-    getArtistDetails(accessToken!, artistId!)
+    getArtistDetails(
+      `${artistId}`,
+      accessToken!,
+      refreshToken!,
+      setAccessTknData
+    )
   );
   const artist = artistRes.data;
 
-  console.log(">>>> artist >>>>", artistRes.data);
+  // get artist's top songs
+  const artistSongsRes = useQuery(
+    ["artist-top-songs", artistId, accessToken],
+    () =>
+      getArtistDetails(
+        `${artistId}/top-tracks?market=KE`,
+        accessToken!,
+        refreshToken!,
+        setAccessTknData
+      )
+  );
+  const topSongs = artistSongsRes.data;
+
+  // get artist's albums
+  const artistAlbumsRes = useQuery(
+    ["artist-albums", artistId, accessToken],
+    () =>
+      getArtistDetails(
+        `${artistId}/albums`,
+        accessToken!,
+        refreshToken!,
+        setAccessTknData
+      )
+  );
+  const albums = artistAlbumsRes.data;
+
+  // get artist's albums
+  const RecommendedArtistsRes = useQuery(
+    ["artist-recommended-artists", artistId, accessToken],
+    () =>
+      getArtistDetails(
+        `${artistId}/related-artists`,
+        accessToken!,
+        refreshToken!,
+        setAccessTknData
+      )
+  );
+  const recommendedArtists = RecommendedArtistsRes.data;
+
+  console.log(">>>> topSongs >>>>", topSongs);
   useEffect(() => {
     setArtistImgURL(artistRes.data?.images[0]?.url);
   }, [artistRes]);
