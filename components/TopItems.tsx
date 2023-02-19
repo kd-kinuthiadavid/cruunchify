@@ -4,6 +4,7 @@ import LoadingBar from "react-top-loading-bar";
 import TopItemsLoader from "./TopItemsLoader";
 import TopItemCard from "./TopItemCard";
 import GeneratePlaylist from "./generatePlaylist";
+import { useRouter } from "next/router";
 
 interface TopItem {
   images: Array<any>;
@@ -48,6 +49,8 @@ const TopItems = ({
     allTime: false,
   });
   const [URIs, setURIs] = useState<Array<string>>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     loaderRef?.current?.continuousStart();
@@ -128,7 +131,7 @@ const TopItems = ({
   };
 
   function shareTopItems() {
-    alert("coming soon");
+    router.push("/comingSoon");
   }
 
   return (
