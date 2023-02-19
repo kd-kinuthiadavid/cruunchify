@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import useCrStore from "../../../store";
@@ -8,6 +8,14 @@ import ArtistInfo from "../../../components/Artists/ArtistInfo";
 import ArtistTopSongs from "../../../components/Artists/ArtistTopSongs";
 import ArtistAlbums from "../../../components/Artists/ArtistAlbums";
 import RelatedArtists from "../../../components/Artists/RelatedArtists";
+import getRecommendations, {
+  GetRecommendationsParams,
+} from "../../../utils/requestUtils/getRecommendations";
+import createPlaylist, {
+  PlaylistPayload,
+} from "../../../utils/requestUtils/createPlaylist";
+import updatePlaylist from "../../../utils/requestUtils/updatePlaylist";
+import CrDialog from "../../../components/CrDialog";
 
 interface ArtistDetailFilters {
   songs: boolean;
@@ -20,6 +28,7 @@ const ArtistDetail = () => {
   const {
     accessTokenData: { accessToken, refreshToken },
     setAccessTknData,
+    currentUser,
   } = useCrStore();
   const [artistImgURL, setArtistImgURL] = useState("");
   const [filters, setFilters] = useState<ArtistDetailFilters>({
@@ -27,6 +36,21 @@ const ArtistDetail = () => {
     albums: false,
     recommended: false,
   });
+  const [URIs, setURIs] = useState<Array<string>>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalErr, setIsModalErr] = useState(false);
+  const [recommendationsParams, setRecommendationsParams] =
+    useState<GetRecommendationsParams>({
+      seed_artists: "",
+      seed_genres: "",
+      seed_tracks: "",
+    });
+  const [createdPlaylist, setCreatedPlaylist] = useState<{
+    id?: string;
+    href?: string;
+    uri?: string;
+    externalUrl?: string;
+  }>({});
   const artistId = router.query?.id as string;
 
   // get artist details
@@ -77,11 +101,40 @@ const ArtistDetail = () => {
         setAccessTknData
       )
   );
+
+  useEffect(() => {
+    const topGenresSeeds = artist?.genres?.slice(0, 2)?.join(",");
+    const topTracksSeeds = topSongs
+      ?.slice(0, 2)
+      ?.map((track: any) => track.id)
+      ?.join(",");
+    setRecommendationsParams({
+      seed_artists: artistId,
+      seed_genres: topGenresSeeds,
+      seed_tracks: topTracksSeeds,
+    });
+  }, [topSongs, artistId]);
+
   const recommendedArtists = RecommendedArtistsRes.data?.artists;
+  const recommendationsRes = useQuery(
+    ["artist-recommendations", accessToken, recommendationsParams],
+    () =>
+      getRecommendations(
+        recommendationsParams,
+        accessToken!,
+        refreshToken!,
+        setAccessTknData
+      )
+  );
+  const recommendedTracks = recommendationsRes?.data?.tracks;
 
   useEffect(() => {
     setArtistImgURL(artistRes.data?.images[0]?.url);
   }, [artistRes]);
+
+  useEffect(() => {
+    setURIs(recommendedTracks?.map((track: any) => track?.uri));
+  }, [recommendedTracks]);
 
   const toggleFiltersTimeRange = (filter: string) => {
     switch (filter) {
@@ -117,6 +170,70 @@ const ArtistDetail = () => {
     }
   };
 
+  const createPlaylistMutation = useMutation({
+    mutationFn: (payload: PlaylistPayload) =>
+      createPlaylist(accessToken!, currentUser?.id!, payload),
+  });
+
+  const updatePlaylistMutation = useMutation({
+    mutationFn: ({
+      uris,
+      playlistId,
+    }: {
+      uris: Array<string>;
+      playlistId: string;
+    }) => updatePlaylist(accessToken!, playlistId, uris),
+  });
+
+  const createPlaylistPayload = {
+    name: `Cruunchify: A ${artist?.name} Recommended Playlist`,
+    description: `You seem to like ${artist?.name} a lot. Here's a playlist of other tracks similar to what ${artist?.name} makes as recommended by Cruunchify. Enjoy and don't forget to share Cruunchify with family and friends.`,
+    collaborative: false,
+    public: true,
+  };
+
+  function handleGeneratePlaylist() {
+    console.log(">>> gen playlist >>");
+    createPlaylistMutation.mutate(createPlaylistPayload, {
+      onSuccess: (data, variables, context) => {
+        // update state
+        // this will be important when showing the success modal
+        setCreatedPlaylist({
+          id: data.id,
+          href: data.href,
+          uri: data.uri,
+          externalUrl: data.external_urls.spotify,
+        });
+
+        // update the created playlist
+        updatePlaylistMutation.mutate(
+          { uris: URIs, playlistId: data.id },
+          {
+            onSuccess: (data, variables, _) => {
+              setIsModalOpen(true);
+            },
+            onError: (error, variables, _) => {
+              setIsModalErr(true);
+            },
+          }
+        );
+      },
+      onError: (error, variables, context) => {
+        setIsModalErr(true);
+      },
+    });
+  }
+
+  function onModalClose() {
+    setIsModalErr(false);
+    setIsModalOpen(false);
+  }
+
+  function openPlaylistInSpotify() {
+    window.open(createdPlaylist.externalUrl, "_blank");
+    onModalClose();
+  }
+
   return (
     <main className="flex flex-col justify-center items-center lg:items-start gap-y-10 lg:flex-row lg:gap-x-28 lg:mx-20">
       <section className="flex flex-col gap-y-5 w-3/4 md:w-2/4 lg:max-w-md h-full lg:sticky lg:top-40">
@@ -133,7 +250,10 @@ const ArtistDetail = () => {
         <div className="lg:hidden">
           <ArtistInfo artist={artist} />
         </div>
-        <button className="btn-primary font-semibold">
+        <button
+          className="btn-primary font-semibold"
+          onClick={handleGeneratePlaylist}
+        >
           <Image
             src="/icons/Playlist.png"
             height={30}
@@ -206,6 +326,36 @@ const ArtistDetail = () => {
           </div>
         </div>
       </section>
+
+      <CrDialog isOpen={isModalOpen} onModalClose={onModalClose}>
+        <div className="flex flex-col gap-y-5">
+          <div className="flex gap-5 items-center">
+            <i
+              className={`text-3xl ${
+                isModalErr
+                  ? "fa-solid fa-triangle-exclamation text-red-600"
+                  : "fa-regular fa-circle-check text-cr-green"
+              } `}
+            ></i>
+            <p className={`font-semibold text-3xl text-cr-green`}>
+              {isModalErr ? "Oops! That didn't work." : "Success"}
+            </p>
+          </div>
+          <p className="text-xl">
+            {isModalErr
+              ? "Something went wrong while creating your playlist. Please try again"
+              : "Your playlist was created successfully"}
+          </p>
+          <button
+            className="btn-primary mt-5 hover:bg-cr-modal"
+            onClick={
+              isModalErr ? handleGeneratePlaylist : openPlaylistInSpotify
+            }
+          >
+            {isModalErr ? "Re-Try" : "Open In Spotify"}
+          </button>
+        </div>
+      </CrDialog>
     </main>
   );
 };
