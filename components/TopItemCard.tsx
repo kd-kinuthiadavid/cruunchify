@@ -10,12 +10,24 @@ interface TopItemCardProps {
   id: string;
 }
 
+
 const TopItemCard = ({ imgSrc, topItem, title, idx, id }: TopItemCardProps) => {
   const router = useRouter();
+
+  function redirectToTopItem({ topItem, id }: { topItem: string; id: string }) {
+    const itemsComingSoon = ["album", "track", "tracks", "show", "shows"];
+    if (topItem === "artist" || topItem === "artists") {
+      router.push(`/top/artists/${id}`);
+    } else if (itemsComingSoon.includes(topItem)) {
+      router.push("/comingSoon");
+    } else {
+      router.push("/404");
+    }
+  }
   return (
     <div
       className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a]"
-      onClick={() => router.push(`/top/${topItem}/${id}`)}
+      onClick={() => redirectToTopItem({ topItem, id })}
     >
       <Image
         className="rounded-lg drop-shadow-md hover:drop-shadow-lg"
