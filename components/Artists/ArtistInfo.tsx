@@ -4,7 +4,7 @@ import { formatNumber } from "../../utils";
 const ArtistInfo = ({ artist }: { artist: any }) => {
   return (
     <div className="mb-5 flex flex-col items-center gap-y-4">
-      <h1 className="font-black text-7xl">{artist?.name}</h1>
+      <h1 className="font-black text-7xl text-center">{artist?.name}</h1>
       <div className="flex justify-center gap-2 flex-wrap max-w-lg">
         {artist?.genres?.map((genre: string, idx: number) => (
           <p
