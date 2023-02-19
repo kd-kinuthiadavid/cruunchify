@@ -4,10 +4,12 @@ import React from "react";
 const comingSoon = () => {
   const router = useRouter();
   return (
-    <section className="flex gap-y-20 flex-col justify-center items-center h-full">
-      <h1 className="font-black text-8xl md:text-9xl">Coming Soon!</h1>
+    <section className="flex gap-y-20 flex-col justify-center items-center text-center mx-5">
+      <h1 className="font-black text-7xl md:text-9xl break-words">
+        Coming Soon!
+      </h1>
       <div className="flex flex-col items-center gap-y-10">
-        <p className="text-4xl max-w-4xl font-thin leading-relaxed">
+        <p className="text-3xl md:text-4xl md:max-w-4xl font-thin leading-relaxed">
           Psst ... guess what? This feature is still cooking up in the lab.
           We're working hard to bring this and other innovative features that
           will take your experience to the next level. Thanks for your patience.
