@@ -61,13 +61,18 @@ export default function Navbar() {
         </motion.li>
       </motion.ul>
       {hasCurrentUser ? (
-        <Image
-          src={currentUserHref}
-          className="rounded-full"
-          height={50}
-          width={50}
-          alt="icon: cruunchify logo"
-        />
+        <div className="flex items-center gap-x-5">
+          <p className="hidden font-medium md:block">
+            {currentUser?.display_name}
+          </p>
+          <Image
+            src={currentUserHref}
+            className="rounded-full cursor-pointer"
+            height={50}
+            width={50}
+            alt="icon: cruunchify logo"
+          />
+        </div>
       ) : null}
     </nav>
   );
