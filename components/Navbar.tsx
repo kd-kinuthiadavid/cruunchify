@@ -32,12 +32,12 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`mx-10 my-8 flex ${
+      className={`mx-2 md:mx-10 my-8 flex ${
         hasCurrentUser ? "justify-between" : "justify-center"
       } mb-16`}
     >
       {/* far left nav items */}
-      <motion.ul className="flex gap-x-10 items-center">
+      <motion.ul className="flex gap-x-3 md:gap-x-10 items-center">
         {/* logo */}
         <Link href={accessToken ? "/dashboard" : "/"}>
           <ul className="flex items-center gap-x-3 cursor-pointer">
