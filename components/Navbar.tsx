@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import useCrStore from "../store";
 
 export default function Navbar() {
@@ -8,10 +9,19 @@ export default function Navbar() {
     accessTokenData: { accessToken },
   } = useCrStore();
 
+  const navItemHover = {
+    backgroundColor: "#3B3B40",
+    padding: "0.5rem 1rem",
+    borderRadius: "0.375rem",
+  };
+
   return (
     <nav className="mx-10 my-8 flex justify-center mb-16">
       {/* far left nav items */}
-      <ul className="flex gap-x-5 items-center">
+      <motion.ul
+        className="flex gap-x-10 items-center"
+        transition={{ ease: "easeInOut" }}
+      >
         {/* logo */}
         <Link href={accessToken ? "/dashboard" : "/"}>
           <ul className="flex items-center gap-x-3 cursor-pointer">
@@ -26,30 +36,14 @@ export default function Navbar() {
           </ul>
         </Link>
         {/* about */}
-        <ul className="flex items-center gap-x-1 cursor-pointer">
-          <li className="flex items-center">
-            <Image
-              src="/icons/About.png"
-              height={30}
-              width={30}
-              alt="icon: about cruunchify"
-            />
-          </li>
-          <li className="text-lg">About</li>
-        </ul>
+        <motion.li className="text-lg cursor-pointer" whileHover={navItemHover}>
+          About
+        </motion.li>
         {/* share */}
-        <ul className="flex items-center gap-x-1 cursor-pointer">
-          <li className="flex items-center">
-            <Image
-              src="/icons/Share.png"
-              height={30}
-              width={30}
-              alt="icon: share cruunchify"
-            />
-          </li>
-          <li className="text-lg">Share</li>
-        </ul>
-      </ul>
+        <motion.li className="text-lg cursor-pointer" whileHover={navItemHover}>
+          Share
+        </motion.li>
+      </motion.ul>
     </nav>
   );
 }
