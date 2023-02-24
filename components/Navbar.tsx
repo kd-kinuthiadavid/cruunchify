@@ -9,6 +9,7 @@ export default function Navbar() {
   // component state
   const [currentUserHref, setCurrentUserHref] = useState("");
   const [hasCurrentUser, setHasCurrentUser] = useState(false);
+  const [urlCopySuccess, setUrlCopySuccess] = useState(false);
 
   // hooks
   const {
@@ -25,11 +26,16 @@ export default function Navbar() {
     }
   }, [currentUser]);
 
-  const navItemHover = {
-    backgroundColor: "#3B3B40",
-    padding: "0.5rem 1rem",
-    borderRadius: "0.375rem",
-  };
+  function handleCopyToClipboard() {
+    navigator.clipboard.writeText("https://cruunchify.vercel.app/").then(
+      () => {
+        setUrlCopySuccess(true);
+      },
+      () => {
+        console.error("Something went wrong copying link");
+      }
+    );
+  }
 
   return (
     <nav
@@ -80,6 +86,33 @@ export default function Navbar() {
           <div className="flex flex-col gap-y-3">
             <h5 className="text-xl font-black">Share</h5>
             <p className="font-light">Share with friends and family.</p>
+            <div className="flex gap-x-5 flex-wrap">
+              {/* twitter */}
+              <a
+                className="twitter-share-button"
+                href="https://twitter.com/intent/tweet?text=Explore%20how%20you%20listen%20to%20music%20on%20Spotify%20with%20Cruunchify:%0A&url=https://cruunchify.vercel.app%0A%0A&hashtags=SpotifyAPI,spotify,cruunchify,tech,web,SpotifyWrapped"
+                target="_blank"
+              >
+                <i className="text-2xl text-[#00acee] fa-brands fa-twitter"></i>
+              </a>
+              {/* facebook */}
+              <a
+                className="fb-xfbml-parse-ignore"
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcruunchify.vercel.app%2F&amp;src=sdkpreparse"
+                target="_blank"
+              >
+                <i className="text-2xl fa-brands fa-facebook text-white"></i>
+              </a>
+              {/* copy to clipboard */}
+              {urlCopySuccess ? (
+                <small className="text-cr-green">copied !</small>
+              ) : (
+                <i
+                  className="text-2xl text-cr-light-green fa-solid fa-copy cursor-pointer"
+                  onClick={handleCopyToClipboard}
+                ></i>
+              )}
+            </div>
           </div>
         </CrPopover>
       </motion.ul>
