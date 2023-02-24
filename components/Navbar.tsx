@@ -15,11 +15,12 @@ export default function Navbar() {
   const {
     accessTokenData: { accessToken },
     currentUser,
+    setCurrentUser,
   } = useCrStore();
 
   // effects
   useEffect(() => {
-    if (currentUser) {
+    if (Object.keys(currentUser).length > 0) {
       const href: string = currentUser?.images![0]?.url;
       setCurrentUserHref(href);
       setHasCurrentUser(true);
@@ -35,6 +36,14 @@ export default function Navbar() {
         console.error("Something went wrong copying link");
       }
     );
+  }
+
+  function handleLogout() {
+    // reset the current user
+    setCurrentUser({});
+
+    // redirect to home
+    window.location.assign("/");
   }
 
   return (
@@ -121,13 +130,27 @@ export default function Navbar() {
           <p className="hidden font-medium md:block">
             {currentUser?.display_name}
           </p>
-          <Image
-            src={currentUserHref}
-            className="rounded-full cursor-pointer"
-            height={50}
-            width={50}
-            alt="icon: cruunchify logo"
-          />
+          <CrPopover
+            btnText={
+              <Image
+                src={currentUserHref}
+                className="rounded-full cursor-pointer"
+                height={50}
+                width={50}
+                alt="icon: cruunchify logo"
+              />
+            }
+            logout
+          >
+            <div className="flex flex-col gap-y-2">
+              <div className="font-thin md:hidden">
+                {currentUser?.display_name?.split(" ")[0]}
+              </div>
+              <div className="cursor-pointer" onClick={handleLogout}>
+                Logout
+              </div>
+            </div>
+          </CrPopover>
         </div>
       ) : null}
     </nav>

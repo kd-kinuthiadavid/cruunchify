@@ -2,11 +2,16 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment, ReactNode } from "react";
 
 interface CrPopoverProps {
-  btnText: string;
+  btnText: ReactNode;
   children: ReactNode;
+  logout?: boolean;
 }
 
-export default function CrPopover({ btnText, children }: CrPopoverProps) {
+export default function CrPopover({
+  btnText,
+  children,
+  logout,
+}: CrPopoverProps) {
   return (
     <div>
       <Popover className="relative">
@@ -18,7 +23,7 @@ export default function CrPopover({ btnText, children }: CrPopoverProps) {
                   open ? "" : "text-opacity-90"
                 } outline-none hover:text-cr-green`}
             >
-              <span>{btnText}</span>
+              {btnText}
             </Popover.Button>
             <Transition
               as={Fragment}
@@ -30,7 +35,11 @@ export default function CrPopover({ btnText, children }: CrPopoverProps) {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute mt-3 z-10 w-full right-1/2 -translate-x-1/2 transform">
-                <div className="font-bold bg-cr-modal flex flex-col p-5 rounded-lg w-screen max-w-[199px]  md:max-w-xl">
+                <div
+                  className={`font-bold bg-cr-modal flex flex-col p-5 rounded-lg w-screen ${
+                    logout ? "max-w-[100px]" : "max-w-[199px] md:max-w-xl"
+                  }`}
+                >
                   {children}
                 </div>
               </Popover.Panel>

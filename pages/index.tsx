@@ -16,8 +16,10 @@ const Home: NextPage = () => {
 
   // effects
   useEffect(() => {
-    if (currentUser && currentUser?.display_name) {
+    if (Object.keys(currentUser).length > 0) {
       router.push("/dashboard");
+      setIsLoading(false);
+    } else {
       setIsLoading(false);
     }
 
@@ -33,7 +35,7 @@ const Home: NextPage = () => {
       </Head>
 
       {isLoading ? <HomeLoader /> : null}
-      {!isLoading && !currentUser ? (
+      {!isLoading && Object.keys(currentUser).length === 0 ? (
         <main className="flex flex-col justify-center items-center text-center p-3 h-full">
           {/* hero text */}
           <div className="flex flex-col items-center gap-y-8 md:gap-y-16 lg:max-w-1/2 lg:mt-10">
