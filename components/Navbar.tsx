@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import useCrStore from "../store";
+import CrPopover from "./CrPopover";
 
 export default function Navbar() {
   // component state
@@ -52,13 +53,35 @@ export default function Navbar() {
           </ul>
         </Link>
         {/* about */}
-        <motion.li className="text-lg cursor-pointer" whileHover={navItemHover}>
-          About
-        </motion.li>
+        <CrPopover btnText="About">
+          <div className="flex flex-col gap-y-3">
+            <h5 className="text-xl font-black">About The App</h5>
+            <p className="font-light">
+              Cruunchify is a sptofiy highlights app that allows users to
+              explore their listening patterns. In other words, it's an
+              on-demand 'spotify wrapped' app.
+            </p>
+            <div
+              className="flex mt-3 w-full items-center gap-x-5 cursor-pointer"
+              onClick={() =>
+                window.open(
+                  "https://github.com/kd-kinuthiadavid/cruunchify",
+                  "_blank"
+                )
+              }
+            >
+              <i className="text-3xl fa-brands fa-github"></i>
+              <p className="text-medium">Explore on Github</p>
+            </div>
+          </div>
+        </CrPopover>
         {/* share */}
-        <motion.li className="text-lg cursor-pointer" whileHover={navItemHover}>
-          Share
-        </motion.li>
+        <CrPopover btnText="Share">
+          <div className="flex flex-col gap-y-3">
+            <h5 className="text-xl font-black">Share</h5>
+            <p className="font-light">Share with friends and family.</p>
+          </div>
+        </CrPopover>
       </motion.ul>
       {hasCurrentUser ? (
         <div className="flex items-center gap-x-5">
