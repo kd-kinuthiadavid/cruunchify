@@ -3,9 +3,26 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { login } from "../utils/auth";
+import useCrStore from "../store";
+import { useEffect, useState } from "react";
+import HomeLoader from "../components/HomeLoader";
 
 const Home: NextPage = () => {
+  // state
+  const [isLoading, setIsLoading] = useState(true);
+  // hooks
   const router = useRouter();
+  const { currentUser } = useCrStore();
+
+  // effects
+  useEffect(() => {
+    if (currentUser && currentUser?.display_name) {
+      router.push("/dashboard");
+      setIsLoading(false);
+    }
+
+    return () => setIsLoading(false);
+  }, [currentUser]);
 
   return (
     <div>
@@ -15,33 +32,36 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col justify-center items-center text-center p-3 h-full">
-        {/* hero text */}
-        <div className="flex flex-col items-center gap-y-8 md:gap-y-16 lg:max-w-1/2 lg:mt-10">
-          <h1 className="text-6xl md:text-9xl font-black">
-            Discover how <br /> you{" "}
-            <span className="text-cr-green">listen.</span>
-          </h1>
-          <p className="text-xl md:text-4xl font-light lg:leading-relaxed">
-            Explore your music taste, profile <br /> and create awesome
-            playlists
-          </p>
-          <button
-            className="flex justify-center items-center p-4 md:p-5 lg:py-5 lg:px-10 gap-x-5 bg-cr-light-green rounded-md md:max-w-xl"
-            onClick={() => login(router)}
-          >
-            <Image
-              src="/icons/Spotify.png"
-              height={30}
-              width={30}
-              alt="icon: cruunchify logo"
-            />
-            <small className="text-lg lg:text-2xl font-regular capitalize">
-              Continue with spotify
-            </small>
-          </button>
-        </div>
-      </main>
+      {isLoading ? <HomeLoader /> : null}
+      {!isLoading && !currentUser ? (
+        <main className="flex flex-col justify-center items-center text-center p-3 h-full">
+          {/* hero text */}
+          <div className="flex flex-col items-center gap-y-8 md:gap-y-16 lg:max-w-1/2 lg:mt-10">
+            <h1 className="text-6xl md:text-9xl font-black">
+              Discover how <br /> you{" "}
+              <span className="text-cr-green">listen.</span>
+            </h1>
+            <p className="text-xl md:text-4xl font-light lg:leading-relaxed">
+              Explore your music taste, profile <br /> and create awesome
+              playlists
+            </p>
+            <button
+              className="flex justify-center items-center p-4 md:p-5 lg:py-5 lg:px-10 gap-x-5 bg-cr-light-green rounded-md md:max-w-xl"
+              onClick={() => login(router)}
+            >
+              <Image
+                src="/icons/Spotify.png"
+                height={30}
+                width={30}
+                alt="icon: cruunchify logo"
+              />
+              <small className="text-lg lg:text-2xl font-regular capitalize">
+                Continue with spotify
+              </small>
+            </button>
+          </div>
+        </main>
+      ) : null}
     </div>
   );
 };
