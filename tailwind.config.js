@@ -12,6 +12,7 @@ module.exports = {
         "cr-genre": "rgba(255,255,255,0.2)",
         "cr-muted": "#3B3B40",
         "cr-modal": "#262927",
+        "cr-loader-bg": "#2b2a2a",
       },
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
