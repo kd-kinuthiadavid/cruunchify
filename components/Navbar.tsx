@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import useCrStore from "../store";
 
 export default function Navbar() {
+  // component state
+  const [currentUserHref, setCurrentUserHref] = useState("");
+  const [hasCurrentUser, setHasCurrentUser] = useState(false);
+
+  // hooks
   const {
     accessTokenData: { accessToken },
+    currentUser,
   } = useCrStore();
+
+  // effects
+  useEffect(() => {
+    if (currentUser) {
+      const href: string = currentUser?.images![0]?.url;
+      setCurrentUserHref(href);
+      setHasCurrentUser(true);
+    }
+  }, [currentUser]);
 
   const navItemHover = {
     backgroundColor: "#3B3B40",
@@ -16,12 +31,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="mx-10 my-8 flex justify-center mb-16">
+    <nav
+      className={`mx-10 my-8 flex ${
+        hasCurrentUser ? "justify-between" : "justify-center"
+      } mb-16`}
+    >
       {/* far left nav items */}
-      <motion.ul
-        className="flex gap-x-10 items-center"
-        transition={{ ease: "easeInOut" }}
-      >
+      <motion.ul className="flex gap-x-10 items-center">
         {/* logo */}
         <Link href={accessToken ? "/dashboard" : "/"}>
           <ul className="flex items-center gap-x-3 cursor-pointer">
@@ -44,6 +60,15 @@ export default function Navbar() {
           Share
         </motion.li>
       </motion.ul>
+      {hasCurrentUser ? (
+        <Image
+          src={currentUserHref}
+          className="rounded-full"
+          height={50}
+          width={50}
+          alt="icon: cruunchify logo"
+        />
+      ) : null}
     </nav>
   );
 }
