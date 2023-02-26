@@ -14,7 +14,7 @@ const ArtistTopSongs = ({
       {isLoading ? (
         <TopItemsLoader />
       ) : (
-        topSongs.map((item: any, idx: number) => (
+        topSongs?.map((item: any, idx: number) => (
           <TopItemCard
             key={idx}
             idx={idx + 1}

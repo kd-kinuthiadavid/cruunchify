@@ -12,6 +12,7 @@ import getRecommendations, {
   GetRecommendationsParams,
 } from "../../../utils/requestUtils/getRecommendations";
 import GeneratePlaylist from "../../../components/generatePlaylist";
+import useGetRecommendations from "../../../components/useGetRecommendations";
 
 interface ArtistDetailFilters {
   songs: boolean;
@@ -32,12 +33,6 @@ const ArtistDetail = () => {
     recommended: false,
   });
   const [URIs, setURIs] = useState<Array<string>>([]);
-  const [recommendationsParams, setRecommendationsParams] =
-    useState<GetRecommendationsParams>({
-      seed_artists: "",
-      seed_genres: "",
-      seed_tracks: "",
-    });
   const artistId = router.query?.id as string;
 
   // get artist details
@@ -77,51 +72,23 @@ const ArtistDetail = () => {
   );
   const albums = artistAlbumsRes.data?.items;
 
-  // get artist's albums
-  const RecommendedArtistsRes = useQuery(
-    ["artist-recommended-artists", artistId, accessToken],
-    () =>
-      getArtistDetails(
-        `${artistId}/related-artists`,
-        accessToken!,
-        refreshToken!,
-        setAccessTknData
-      )
+  const { recommendedArtistsRes, recommendedTracksRes } = useGetRecommendations(
+    {
+      tracks: topSongs,
+      artistId,
+      parent: "artist",
+    }
   );
-
-  useEffect(() => {
-    const topGenresSeeds = artist?.genres?.slice(0, 2)?.join(",");
-    const topTracksSeeds = topSongs
-      ?.slice(0, 2)
-      ?.map((track: any) => track.id)
-      ?.join(",");
-    setRecommendationsParams({
-      seed_artists: artistId,
-      seed_genres: topGenresSeeds,
-      seed_tracks: topTracksSeeds,
-    });
-  }, [topSongs, artistId]);
-
-  const recommendedArtists = RecommendedArtistsRes.data?.artists;
-  const recommendationsRes = useQuery(
-    ["artist-recommendations", accessToken, recommendationsParams],
-    () =>
-      getRecommendations(
-        recommendationsParams,
-        accessToken!,
-        refreshToken!,
-        setAccessTknData
-      )
-  );
-  const recommendedTracks = recommendationsRes?.data?.tracks;
 
   useEffect(() => {
     setArtistImgURL(artistRes.data?.images[0]?.url);
-  }, [artistRes]);
+  }, [artist]);
 
   useEffect(() => {
-    setURIs(recommendedTracks?.map((track: any) => track?.uri));
-  }, [recommendedTracks]);
+    setURIs(
+      recommendedTracksRes?.data?.tracks?.map((track: any) => track?.uri)
+    );
+  }, [recommendedTracksRes]);
 
   const toggleFiltersTimeRange = (filter: string) => {
     switch (filter) {
@@ -241,8 +208,8 @@ const ArtistDetail = () => {
               />
             ) : filters.recommended ? (
               <RelatedArtists
-                isLoading={RecommendedArtistsRes.isLoading}
-                relatedArtists={recommendedArtists}
+                isLoading={recommendedArtistsRes?.isLoading}
+                relatedArtists={recommendedArtistsRes?.data?.artists}
               />
             ) : null}
           </div>
