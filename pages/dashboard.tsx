@@ -115,54 +115,71 @@ const dashboard = () => {
         <h2 className="hidden md:block text-6xl font-extrabold capitalize text-center">
           explore
         </h2>
-        <div className="flex flex-wrap gap-2 font-bold justify-center mt-5">
+        <div className="font-bold columns-1 md:columns-3 gap-3 w-screen px-5 md:px-0 md:w-full h-full">
+          {/* top artists */}
           <Link href="/top/artists">
             <div
-              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
+              className="w-full h-full aspect-video capitalize rounded-lg p-5 mb-5 cursor-pointer text-xl"
               style={{
                 backgroundColor: `${generateRandomColor()}`,
                 backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
               }}
             >
-              top artists
+              top <br /> artists
             </div>
           </Link>
+          {/* top tracks */}
           <Link href="/top/tracks">
             <div
-              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
+              className="w-full h-full aspect-square capitalize rounded-lg p-5 text-xl cursor-pointer mb-3"
               style={{
                 backgroundColor: `${generateRandomColor()}`,
                 backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
               }}
             >
-              top tracks
+              top <br /> tracks
             </div>
           </Link>
-          {/* <Link href="/top/genres">
-            <div
-              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
-              style={{
-                backgroundColor: `${generateRandomColor()}`,
-                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
-              }}
-            >
-              top genres
-            </div>
-          </Link> */}
-          <Link href="/top/shows">
-            <div
-              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
-              style={{
-                backgroundColor: `${generateRandomColor()}`,
-                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
-              }}
-            >
-              top shows
-            </div>
-          </Link>
+          {/* top genres */}
           <Link href="/comingSoon">
             <div
-              className="flex justify-center capitalize rounded-lg p-16 cursor-pointer"
+              className="w-full aspect-video capitalize rounded-lg p-5 text-xl cursor-pointer mb-3"
+              style={{
+                backgroundColor: `${generateRandomColor()}`,
+                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
+              }}
+            >
+              top <br /> genres
+            </div>
+            {/* top shows */}
+          </Link>
+          {/* @TODO: generate a recommended playlist */}
+          <Link href="/comingSoon">
+            <div
+              className="w-full h-full aspect-square p-5 text-xl capitalize rounded-lg cursor-pointer mb-3 break-words"
+              style={{
+                backgroundColor: `${generateRandomColor()}`,
+                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
+              }}
+            >
+              recommended <br /> playlist
+            </div>
+          </Link>
+          <Link href="/top/shows">
+            <div
+              className="w-full h-full aspect-square p-5 text-xl capitalize rounded-lg cursor-pointer mb-3"
+              style={{
+                backgroundColor: `${generateRandomColor()}`,
+                backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
+              }}
+            >
+              top <br /> shows
+            </div>
+          </Link>
+          {/* play highlights */}
+          <Link href="/comingSoon">
+            <div
+              className="w-full aspect-video capitalize rounded-lg p-5 text-xl cursor-pointer mb-3"
               style={{
                 backgroundColor: `${generateRandomColor()}`,
                 backgroundImage: `linear-gradient(226.17deg, rgba(17,17,18,0) 0%, rgba(17,17,18,0.6) 100%)`,
