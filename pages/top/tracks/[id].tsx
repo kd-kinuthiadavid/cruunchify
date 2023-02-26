@@ -28,6 +28,7 @@ const TrackDetails = () => {
     recTracks: true,
     recArtists: false,
   });
+  const [URIs, setURIs] = useState<Array<string>>([]);
   // hooks
   const {
     accessTokenData: { accessToken, refreshToken },
@@ -73,22 +74,16 @@ const TrackDetails = () => {
     }
   };
 
-  //   const createPlaylistPayload = {
-  //     name: `Cruunchify: A ${artist?.name} Recommended Playlist`,
-  //     description: `You seem to like ${artist?.name} a lot. Here's a playlist of other tracks similar to what ${artist?.name} makes as recommended by Cruunchify. Enjoy and don't forget to share Cruunchify with family and friends.`,
-  //     collaborative: false,
-  //     public: true,
-  //   };
+  const createPlaylistPayload = {
+    name: `Cruunchify: A ${track?.name} Recommended Playlist`,
+    description: `You seem to like ${track?.name} a lot. Here's a playlist of other tracks similar to what ${track?.name} makes as recommended by Cruunchify. Enjoy and don't forget to share Cruunchify with family and friends.`,
+    collaborative: false,
+    public: true,
+  };
 
   useEffect(() => {
     setTrackImgURL(track?.album?.images[0]?.url);
   }, [track]);
-
-  console.log("!!!!!!!!!! PARAMS FOR RECOMMS !!!!!!!!!!!", {
-    tracks: [{ id: track?.id }],
-    artistId: track?.artists[0]?.id,
-    parent: "track",
-  });
 
   const { recommendedArtistsRes, recommendedTracksRes } = useGetRecommendations(
     {
@@ -98,14 +93,11 @@ const TrackDetails = () => {
     }
   );
 
-  console.log(
-    "######### recommended tracks #########",
-    recommendedTracksRes?.data
-  );
-  console.log(
-    "@@@@@@@@@@@@@ recommended artists @@@@@@@@@",
-    recommendedArtistsRes?.data
-  );
+  const recommendedTracks = recommendedTracksRes?.data?.tracks;
+
+  useEffect(() => {
+    setURIs(recommendedTracks?.map((track: any) => track?.uri));
+  }, [recommendedTracks]);
 
   return (
     <main className="flex flex-col justify-center items-center lg:items-start gap-y-10 lg:flex-row lg:gap-x-28 lg:mx-20">
@@ -123,25 +115,21 @@ const TrackDetails = () => {
         <div className="lg:hidden">
           <TrackInfo track={track} />
         </div>
-        {/* <GeneratePlaylist
+        <GeneratePlaylist
           URIs={URIs}
           createPlaylistPayload={createPlaylistPayload}
         />
         <button
           className="btn-sec font-semibold"
           onClick={() =>
-            window.open(`${artist.external_urls.spotify}`, "_blank")
+            window.open(`${track.external_urls.spotify}`, "_blank")
           }
         >
           <i className="text-3xl fa-brands fa-spotify"></i>
           Open In Spotify
-        </button> */}
+        </button>
       </section>
       <section className="flex flex-col gap-y-10">
-        {/* Artist Info */}
-        {/* <div className="hidden lg:block">
-          <ArtistInfo artist={artist} />
-        </div> */}
         <div className="flex flex-col justify-center items-center gap-y-5 md:max-w-screen-lg">
           {/* filters */}
           <div className="flex justify-center items-center gap-x-7">
