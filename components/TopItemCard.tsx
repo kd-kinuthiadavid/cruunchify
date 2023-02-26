@@ -15,9 +15,11 @@ const TopItemCard = ({ imgSrc, topItem, title, idx, id }: TopItemCardProps) => {
   const router = useRouter();
 
   function redirectToTopItem({ topItem, id }: { topItem: string; id: string }) {
-    const itemsComingSoon = ["album", "track", "tracks", "show", "shows"];
+    const itemsComingSoon = ["album", "show", "shows"];
     if (topItem === "artist" || topItem === "artists") {
       router.push(`/top/artists/${id}`);
+    } else if (topItem === "tracks" || topItem === "track") {
+      router.push(`/top/tracks/${id}`);
     } else if (itemsComingSoon.includes(topItem)) {
       router.push("/comingSoon");
     } else {
