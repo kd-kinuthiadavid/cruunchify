@@ -8,9 +8,6 @@ import ArtistInfo from "../../../components/Artists/ArtistInfo";
 import ArtistTopSongs from "../../../components/Artists/ArtistTopSongs";
 import ArtistAlbums from "../../../components/Artists/ArtistAlbums";
 import RelatedArtists from "../../../components/Artists/RelatedArtists";
-import getRecommendations, {
-  GetRecommendationsParams,
-} from "../../../utils/requestUtils/getRecommendations";
 import GeneratePlaylist from "../../../components/generatePlaylist";
 import useGetRecommendations from "../../../components/useGetRecommendations";
 

@@ -2,15 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import useCrStore from "../../../store";
-import getArtistDetails from "../../../utils/requestUtils/getArtistDetails";
 import Image from "next/image";
-import ArtistInfo from "../../../components/Artists/ArtistInfo";
 import ArtistTopSongs from "../../../components/Artists/ArtistTopSongs";
-import ArtistAlbums from "../../../components/Artists/ArtistAlbums";
 import RelatedArtists from "../../../components/Artists/RelatedArtists";
-import getRecommendations, {
-  GetRecommendationsParams,
-} from "../../../utils/requestUtils/getRecommendations";
 import GeneratePlaylist from "../../../components/generatePlaylist";
 import getTrackDetails from "../../../utils/requestUtils/getTrackDetails";
 import TrackInfo from "../../../components/Tracks/TrackInfo";

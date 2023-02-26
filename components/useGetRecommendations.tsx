@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import getRecommendations, {
   GetRecommendationsParams,
 } from "../utils/requestUtils/getRecommendations";
