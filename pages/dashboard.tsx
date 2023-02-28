@@ -141,7 +141,7 @@ const dashboard = () => {
             </div>
           </Link>
           {/* top genres */}
-          <Link href="/comingSoon">
+          <Link href="/top/genres">
             <div
               className="w-full aspect-video capitalize rounded-lg p-5 text-xl cursor-pointer mb-3"
               style={{
