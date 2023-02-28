@@ -50,12 +50,13 @@ const TopGenres = () => {
     const sortedGenres: any = [...allGenresMap.entries()].sort(
       (a, b) => b[1] - a[1]
     );
-
-    setTopGenre({
-      name: sortedGenres[0][0],
-      percentage: Math.ceil((sortedGenres[0][1] / sortedGenres.length) * 100),
-      allGenresCount: sortedGenres.length,
-    });
+    if (sortedGenres[0]?.length) {
+      setTopGenre({
+        name: sortedGenres[0][0],
+        percentage: Math.ceil((sortedGenres[0][1] / sortedGenres.length) * 100),
+        allGenresCount: sortedGenres.length,
+      });
+    }
 
     setTopTenGenres(sortedGenres.slice(0, 12));
   }, [topArtistsRes.data?.items]);
