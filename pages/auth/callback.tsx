@@ -62,7 +62,7 @@ const callback = ({
 
   if (data.error) {
     return (
-      <section className="h-screen flex flex-col items-center gap-y-10 text-center mx-5">
+      <section className="h-screen flex flex-col items-center gap-y-10 text-center mx-5 mt-10">
         <h1 className="font-black text-8xl md:text-9xl">Oops !</h1>
         <h2 className="font-black text-5xl md:text-6xl text-cr-light-green">
           We hit a snag.
@@ -98,7 +98,7 @@ const callback = ({
   setCurrentUser(data.user!);
 
   return (
-    <main className="h-screen flex flex-col items-center">
+    <main className="h-screen flex flex-col items-center mt-12">
       <LoadingBar color="#33FF7A" ref={loaderRef} />
       <section className="flex justify-center gap-x-4 md:gap-x-10 mx-2">
         <div className="flex flex-col">
