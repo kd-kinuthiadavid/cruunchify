@@ -20,7 +20,7 @@ export default function Navbar() {
 
   // effects
   useEffect(() => {
-    if (Object.keys(currentUser).length > 0) {
+    if (currentUser && Object.keys(currentUser).length > 0) {
       const href: string = currentUser?.images![0]?.url;
       setCurrentUserHref(href);
       setHasCurrentUser(true);

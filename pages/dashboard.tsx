@@ -20,7 +20,7 @@ const dashboard = () => {
   useEffect(() => {
     setIsLoading(true);
     loaderRef?.current?.continuousStart();
-    if (currentUser.display_name) {
+    if (currentUser?.display_name) {
       setUser(currentUser);
       setIsLoading(false);
     }
@@ -32,7 +32,7 @@ const dashboard = () => {
 
   let currentUserProfilePhotoURL = "";
   if (user.images) {
-    currentUserProfilePhotoURL = user.images[0].url;
+    currentUserProfilePhotoURL = user?.images[0]?.url;
   }
 
   // get artists that the current user follows
