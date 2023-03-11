@@ -8,10 +8,17 @@ interface TopItemCardProps {
   title: string;
   idx: number;
   id: string;
+  spotifyURL: string;
 }
 
-
-const TopItemCard = ({ imgSrc, topItem, title, idx, id }: TopItemCardProps) => {
+const TopItemCard = ({
+  imgSrc,
+  topItem,
+  title,
+  idx,
+  id,
+  spotifyURL,
+}: TopItemCardProps) => {
   const router = useRouter();
 
   function redirectToTopItem({ topItem, id }: { topItem: string; id: string }) {
@@ -27,10 +34,7 @@ const TopItemCard = ({ imgSrc, topItem, title, idx, id }: TopItemCardProps) => {
     }
   }
   return (
-    <div
-      className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a]"
-      onClick={() => redirectToTopItem({ topItem, id })}
-    >
+    <div className="rounded-lg cursor-pointer p-2 bg-[#181818] hover:bg-[#2b2a2a] flex flex-col">
       <Image
         className="rounded-lg drop-shadow-md hover:drop-shadow-lg"
         src={imgSrc}
@@ -40,10 +44,17 @@ const TopItemCard = ({ imgSrc, topItem, title, idx, id }: TopItemCardProps) => {
         priority
         placeholder="blur"
         blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+        onClick={() => redirectToTopItem({ topItem, id })}
       />
-      <p className="font-medium text-lg text-left max-w-[200px] truncate my-2">
-        {idx}. {title}
-      </p>
+      <div className="flex justify-between gap-x-5 items-center">
+        <p className="font-medium text-lg text-left max-w-[150px] truncate my-2">
+          {idx}. {title}
+        </p>
+        <i
+          className="text-xl fa-brands fa-spotify"
+          onClick={() => window.open(`${spotifyURL}`, "_blank")}
+        ></i>
+      </div>
     </div>
   );
 };

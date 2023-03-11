@@ -9,6 +9,7 @@ const ArtistTopSongs = ({
   topSongs: any;
   isLoading: boolean;
 }) => {
+
   return (
     <>
       {isLoading ? (
@@ -22,6 +23,7 @@ const ArtistTopSongs = ({
             topItem={item.type}
             title={item.name}
             id={item.id}
+            spotifyURL={item?.external_urls?.spotify}
           />
         ))
       )}

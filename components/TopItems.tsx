@@ -15,6 +15,9 @@ interface TopItem {
   album?: any;
   show?: any;
   uri?: string;
+  external_urls: {
+    spotify: string;
+  };
 }
 
 interface TopItemsProps {
@@ -204,6 +207,7 @@ const TopItems = ({
                 topItem={title}
                 title={item.name}
                 id={item.id}
+                spotifyURL={item?.external_urls?.spotify}
               />
             ))}
           </div>

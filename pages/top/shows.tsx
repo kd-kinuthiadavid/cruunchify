@@ -23,6 +23,7 @@ const TopShows = () => {
         type: show?.show?.type,
         id: show?.show?.id,
         images: show?.show?.images,
+        external_urls: show?.show?.external_urls,
       }))}
       btnText="generate playlist"
       isLoading={topShowsRes?.isLoading}
