@@ -22,6 +22,7 @@ const ArtistAlbums = ({
             topItem={item.type}
             title={item.name}
             id={item.id}
+            spotifyURL={item?.external_urls?.spotify}
           />
         ))
       )}
